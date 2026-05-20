@@ -24,6 +24,7 @@ export class User {
     role = 'user',
     createdAt = new Date().toISOString(),
     locale = 'en',
+    publicId = null,
   } = {}) {
     if (new.target === User) {
       // Allow building a raw User (e.g. before role resolution), but warn.
@@ -35,6 +36,7 @@ export class User {
     this._role = role;
     this._createdAt = createdAt;
     this._locale = locale;
+    this._publicId = publicId;
   }
 
   // ── Getters (encapsulation) ──────────────────────────────────────────────
@@ -55,8 +57,13 @@ export class User {
   /** Human-readable role label. Override per role. */
   get roleLabel() { return 'User'; }
 
-  /** Public ID shown in the app (e.g. LRN-0042). Built from prefix + id slice. */
+  /**
+   * Public ID shown in the app (e.g. LRN-0042). Prefers the stored/registered
+   * id (from the DB or registration); falls back to a prefix + id slice for
+   * demo users that were created without one.
+   */
   get publicId() {
+    if (this._publicId) return this._publicId;
     const raw = String(this._id || '').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
     const tail = raw.slice(-4).padStart(4, '0');
     return `${this.rolePrefix}-${tail}`;
@@ -111,6 +118,7 @@ export class User {
       role: row.role,
       createdAt: row.created_at,
       locale: row.locale || 'en',
+      publicId: row.public_id,
     };
 
     switch (row.role) {

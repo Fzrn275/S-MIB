@@ -109,6 +109,22 @@ export function runAuthSmokeTest() {
     if (p.phone !== '+60' || p.ic_number !== '850101-13-5678') throw new Error('parent keys');
   }, r);
 
+  check('buildUserModel: user.publicId reflects the registered public id', () => {
+    const u = buildUserModel({
+      role: 'senior_learner', id: 'demo-x-123', publicId: 'LRN-0009',
+      profile: { displayName: 'S', email: 's@s.my', grade: 'Form 4' },
+    });
+    if (u.publicId !== 'LRN-0009') throw new Error('publicId=' + u.publicId);
+  }, r);
+
+  check('User.fromRow: publicId reflects stored public_id, not the uid', () => {
+    const u = User.fromRow({
+      id: 'uuid-abcd-9999', email: 'a@b.c', display_name: 'A',
+      role: 'senior_learner', public_id: 'LRN-0042',
+    });
+    if (u.publicId !== 'LRN-0042') throw new Error('publicId=' + u.publicId);
+  }, r);
+
   const ok = r.every((x) => x.ok);
   return { ok, results: r };
 }

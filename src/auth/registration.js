@@ -110,6 +110,7 @@ export function buildUserModel({ role, id, publicId, profile = {} }) {
     email: profile.email,
     displayName: profile.displayName,
     locale: profile.locale || 'en',
+    publicId,
   };
   switch (role) {
     case 'junior_learner':
