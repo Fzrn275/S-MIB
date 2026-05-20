@@ -28,7 +28,7 @@ const P1_STEPS = [
   { project_id: 1, step_n: 6, title: 'Final Assembly & Test', instruction: 'Enclose the circuit in the provided case or fabricate one from cardboard. Attach the solar panel to the lid. Connect a phone and verify charging starts within 10 seconds of placing in sunlight.', tip: 'A charging phone means success! Take your proof photo and submit to earn your completion certificate.', materials: [{ name: 'Project case or cardboard' }, { name: 'Hot glue or tape' }, { name: 'Completed circuit' }], xp: 80, video_url: null, proof_required: true },
 ];
 
-function placeholderSteps(projectId, count) {
+export function placeholderSteps(projectId, count) {
   const out = [];
   for (let i = 1; i <= count; i++) {
     out.push({
@@ -73,4 +73,19 @@ export const SEED_DEMO_PROGRESS = [
   { project_id: 2, completed_step_numbers: [1, 2, 3, 4, 5, 6], xp_earned: 270, last_step_at: null, is_bookmarked: false, is_manually_completed: false, step_proofs: {}, step_ratings: {} },
   { project_id: 3, completed_step_numbers: [1],                xp_earned: 20,  last_step_at: null, is_bookmarked: false, is_manually_completed: false, step_proofs: {}, step_ratings: {} },
   { project_id: 6, completed_step_numbers: [1, 2, 3, 4],       xp_earned: 140, last_step_at: null, is_bookmarked: false, is_manually_completed: false, step_proofs: {}, step_ratings: {} },
+];
+
+/** Offline demo creator's portfolio (mixed draft/review/published). */
+export const SEED_CREATOR_PROJECTS = [
+  { id: 1,  title: 'Solar Phone Charger',    category: 'Electronics', difficulty: 'Easy',   duration: '3–5 hours', description: 'Build a solar-powered USB charger using a 6V panel, USB module and basic breadboard wiring.', emoji: '⚡', color: 'teal-img',   creator_id: null, creator_name: 'Ahmad Khalil', status: 'published', enrolled: 142, completion: 68, rating: 4.9, type: 'guided', step_count: 6 },
+  { id: 2,  title: 'Smart Water Sensor',     category: 'Agriculture', difficulty: 'Medium', duration: '1–2 days',  description: 'Capacitive soil moisture sensor with an Arduino Nano that sends SMS alerts.', emoji: '🌱', color: 'green-img',  creator_id: null, creator_name: 'Ahmad Khalil', status: 'published', enrolled: 98,  completion: 52, rating: 4.7, type: 'guided', step_count: 8 },
+  { id: 3,  title: 'Biogas Generator',       category: 'Agriculture', difficulty: 'Medium', duration: '1 week',    description: 'Small-scale biogas digester from recycled materials.', emoji: '🔬', color: 'green-img',  creator_id: null, creator_name: 'Ahmad Khalil', status: 'review',    enrolled: 0,   completion: 0,  rating: 0,   type: 'guided', step_count: 7 },
+  { id: 4,  title: 'Arduino Plant Monitor',  category: 'Coding',      difficulty: 'Hard',   duration: '2+ weeks',  description: 'Full IoT project: soil sensor + DHT11 + OLED + Blynk dashboard.', emoji: '🤖', color: 'purple-img', creator_id: null, creator_name: 'Ahmad Khalil', status: 'published', enrolled: 203, completion: 31, rating: 4.8, type: 'guided', step_count: 10 },
+  { id: 5,  title: 'Wind Turbine Basics',    category: 'Renewable',   difficulty: 'Easy',   duration: '1–2 hours', description: 'Functional wind turbine from recycled bottles and a DC motor.', emoji: '♻️', color: 'green-img',  creator_id: null, creator_name: 'Ahmad Khalil', status: 'draft',     enrolled: 0,   completion: 0,  rating: 0,   type: 'guided', step_count: 5 },
+  { id: 6,  title: 'LED Circuit Board',      category: 'Electronics', difficulty: 'Easy',   duration: '1–2 hours', description: 'Fundamentals of circuit design: resistors, LEDs, breadboards, multimeters.', emoji: '💡', color: 'teal-img',   creator_id: null, creator_name: 'Ahmad Khalil', status: 'published', enrolled: 188, completion: 89, rating: 5.0, type: 'guided', step_count: 4 },
+  { id: 7,  title: 'Soil pH Tester',         category: 'Agriculture', difficulty: 'Easy',   duration: '3–5 hours', description: 'Measure soil pH with a probe and a microcontroller.', emoji: '🌱', color: 'green-img',  creator_id: null, creator_name: 'Ahmad Khalil', status: 'draft',     enrolled: 0,   completion: 0,  rating: 0,   type: 'guided', step_count: 4 },
+  { id: 8,  title: 'Hydroponic System',      category: 'Agriculture', difficulty: 'Hard',   duration: '2+ weeks',  description: 'Automated hydroponic system with pH sensor and pump control.', emoji: '🥬', color: 'green-img',  creator_id: null, creator_name: 'Ahmad Khalil', status: 'published', enrolled: 76,  completion: 44, rating: 4.6, type: 'guided', step_count: 9 },
+  { id: 9,  title: 'Ultrasonic Meter',       category: 'Coding',      difficulty: 'Easy',   duration: '1–2 hours', description: 'Handheld distance meter using HC-SR04 and a 16×2 LCD.', emoji: '📡', color: 'purple-img', creator_id: null, creator_name: 'Ahmad Khalil', status: 'published', enrolled: 91,  completion: 74, rating: 4.7, type: 'guided', step_count: 4 },
+  { id: 10, title: 'Solar Water Heater',     category: 'Renewable',   difficulty: 'Medium', duration: '1 week',    description: 'Passive solar water heating panel from copper pipe.', emoji: '☀️', color: 'amber-img',  creator_id: null, creator_name: 'Ahmad Khalil', status: 'review',    enrolled: 0,   completion: 0,  rating: 0,   type: 'guided', step_count: 6 },
+  { id: 11, title: 'Earthquake Detector',    category: 'Coding',      difficulty: 'Hard',   duration: '1–2 days',  description: 'Seismograph with MPU-6050, SD logging and FFT analysis.', emoji: '📳', color: 'red-img',    creator_id: null, creator_name: 'Ahmad Khalil', status: 'published', enrolled: 29,  completion: 18, rating: 4.8, type: 'guided', step_count: 8 },
 ];
