@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { PlaceholderScreen } from '../screens/_PlaceholderScreen';
+import { LearnerHomeScreen } from '../screens/learner/LearnerHomeScreen';
 import { colors } from '../theme/tokens';
 
 const Tab = createBottomTabNavigator();
@@ -33,7 +34,7 @@ export function LearnerTabs() {
         tabBarIcon: iconFor(route.name),
       })}
     >
-      <Tab.Screen name="Home" component={PlaceholderScreen} />
+      <Tab.Screen name="Home" component={LearnerHomeScreen} />
       <Tab.Screen name="Explore" component={PlaceholderScreen} />
       <Tab.Screen name="Progress" component={PlaceholderScreen} />
       <Tab.Screen name="Profile" component={PlaceholderScreen} />
