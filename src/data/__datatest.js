@@ -9,13 +9,14 @@ import { buildCard } from './learnerView';
 import { categoryMeta } from './categoryMeta';
 import { buildAnalytics } from './creatorStats';
 import { makeLocalStore } from './localStore';
-import { GuidedProject, Progress, Certificate } from '../models';
+import { GuidedProject, Progress, Certificate, Creator, VerifiedCreator } from '../models';
 import { makeProgressRepo } from '../repos/progressRepo';
 import { makeProjectRepo } from '../repos/projectRepo';
 import { makeCertificateRepo } from '../repos/certificateRepo';
 import { makeAchievementRepo } from '../repos/achievementRepo';
 import { makeCreatorRepo } from '../repos/creatorRepo';
 import { makeProgressService } from '../services/progressService';
+import { makeAuthoringService } from '../services/authoringService';
 
 function check(name, fn, results) {
   return Promise.resolve()
@@ -314,6 +315,44 @@ export async function runDataSmokeTest() {
     await repo.setStatus(7, 'review', 'creator-1');
     const p = await repo.getMyProjectWithSteps(7, 'creator-1');
     if (p.status !== 'review') throw new Error(`status=${p.status}`);
+  }, r);
+
+  await check('authoringService.saveProject draft keeps status draft', async () => {
+    const store = makeLocalStore(memStore());
+    const creatorRepo = makeCreatorRepo({ store, db: null, configured: false });
+    const svc = makeAuthoringService({ creatorRepo });
+    const user = new Creator({ id: 'creator-1', email: 'c@x.y', displayName: 'Cara' });
+    const saved = await svc.saveProject({ user, project: { title: 'N', category: 'Coding', difficulty: 'Easy' }, steps: [{ title: 'a', materials: 'LED, Wire', xp: 40 }], submit: false });
+    if (saved.status !== 'draft') throw new Error(`status=${saved.status}`);
+    if (saved.steps[0].materials.length !== 2) throw new Error('materials parsed');
+    if (saved.emoji !== '🤖') throw new Error('emoji from category');
+  }, r);
+
+  await check('authoringService.saveProject submit -> review for base Creator', async () => {
+    const store = makeLocalStore(memStore());
+    const creatorRepo = makeCreatorRepo({ store, db: null, configured: false });
+    const svc = makeAuthoringService({ creatorRepo });
+    const user = new Creator({ id: 'creator-1', email: 'c@x.y', displayName: 'Cara' });
+    const saved = await svc.saveProject({ user, project: { title: 'N', category: 'Coding' }, steps: [], submit: true });
+    if (saved.status !== 'review') throw new Error(`status=${saved.status}`);
+  }, r);
+
+  await check('authoringService.saveProject submit -> published for VerifiedCreator', async () => {
+    const store = makeLocalStore(memStore());
+    const creatorRepo = makeCreatorRepo({ store, db: null, configured: false });
+    const svc = makeAuthoringService({ creatorRepo });
+    const user = new VerifiedCreator({ id: 'creator-2', email: 'v@x.y', displayName: 'Vee' });
+    const saved = await svc.saveProject({ user, project: { title: 'N', category: 'Coding' }, steps: [], submit: true });
+    if (saved.status !== 'published') throw new Error(`status=${saved.status}`);
+  }, r);
+
+  await check('authoringService.saveProject editing a published project -> review', async () => {
+    const store = makeLocalStore(memStore());
+    const creatorRepo = makeCreatorRepo({ store, db: null, configured: false });
+    const svc = makeAuthoringService({ creatorRepo });
+    const user = new Creator({ id: 'creator-1', email: 'c@x.y', displayName: 'Cara' });
+    const saved = await svc.saveProject({ user, project: { id: 6, title: 'LED', category: 'Electronics', status: 'published' }, steps: [], submit: false });
+    if (saved.status !== 'review') throw new Error(`status=${saved.status}`);
   }, r);
 
   const ok = r.every((x) => x.ok);
