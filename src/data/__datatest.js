@@ -6,6 +6,7 @@
 
 import { computeReward } from './reward';
 import { buildCard } from './learnerView';
+import { categoryMeta } from './categoryMeta';
 import { makeLocalStore } from './localStore';
 import { GuidedProject, Progress, Certificate } from '../models';
 import { makeProgressRepo } from '../repos/progressRepo';
@@ -230,6 +231,13 @@ export async function runDataSmokeTest() {
     const p5 = all.find((p) => String(p.projectId) === '5');
     if (!p1 || p1.completedStepNumbers.length !== 3) throw new Error('local should win for p1');
     if (!p5 || p5.completedStepNumbers.length !== 2) throw new Error('remote-only p5 missing');
+  }, r);
+
+  await check('categoryMeta maps known + unknown categories', () => {
+    if (categoryMeta('Electronics').emoji !== '⚡') throw new Error('electronics emoji');
+    if (categoryMeta('Coding').color !== 'purple-img') throw new Error('coding color');
+    const d = categoryMeta('Nonsense');
+    if (d.emoji !== '🛠️' || d.color !== 'teal-img') throw new Error('default');
   }, r);
 
   const ok = r.every((x) => x.ok);
