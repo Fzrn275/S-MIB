@@ -7,6 +7,7 @@
 import { computeReward } from './reward';
 import { buildCard } from './learnerView';
 import { categoryMeta } from './categoryMeta';
+import { buildAnalytics } from './creatorStats';
 import { makeLocalStore } from './localStore';
 import { GuidedProject, Progress, Certificate } from '../models';
 import { makeProgressRepo } from '../repos/progressRepo';
@@ -238,6 +239,27 @@ export async function runDataSmokeTest() {
     if (categoryMeta('Coding').color !== 'purple-img') throw new Error('coding color');
     const d = categoryMeta('Nonsense');
     if (d.emoji !== '🛠️' || d.color !== 'teal-img') throw new Error('default');
+  }, r);
+
+  await check('creatorStats.buildAnalytics aggregates published projects', () => {
+    const mk = (o) => new GuidedProject({ id: o.id, title: 't', status: o.status, stepCountHint: 4, enrolled: o.enrolled || 0, completion: o.completion || 0, rating: o.rating || 0 });
+    const projects = [
+      mk({ id: 1, status: 'published', enrolled: 100, completion: 60, rating: 4.8 }),
+      mk({ id: 2, status: 'published', enrolled: 50, completion: 40, rating: 0 }),     // unrated
+      mk({ id: 3, status: 'draft', enrolled: 0, completion: 0, rating: 0 }),           // excluded
+    ];
+    const a = buildAnalytics(projects);
+    if (a.totalStudents !== 150) throw new Error(`students=${a.totalStudents}`);
+    if (a.avgCompletion !== 50) throw new Error(`avgCompletion=${a.avgCompletion}`);
+    if (a.avgRating !== '4.8') throw new Error(`avgRating=${a.avgRating}`);
+    if (a.topProjects.length !== 2) throw new Error('topProjects');
+    if (a.topProjects[0].id !== 1) throw new Error('top sorted by enrolled');
+  }, r);
+
+  await check('creatorStats.buildAnalytics avgRating null when none rated', () => {
+    const a = buildAnalytics([new GuidedProject({ id: 9, title: 't', status: 'published', enrolled: 5, completion: 10, rating: 0 })]);
+    if (a.avgRating !== null) throw new Error(`avgRating=${a.avgRating}`);
+    if (a.weeklyBars.length !== 7) throw new Error('weeklyBars length');
   }, r);
 
   const ok = r.every((x) => x.ok);
