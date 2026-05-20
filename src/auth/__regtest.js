@@ -42,6 +42,20 @@ export function runAuthSmokeTest() {
     if (resolveRole({ role: 'parent' }) !== 'parent') throw new Error('parent');
   }, r);
 
+  check('roleMeta: prefixes and perks for each UI role', () => {
+    if (roleMeta.learner.prefix !== 'LRN') throw new Error('LRN');
+    if (roleMeta.creator.prefix !== 'CRT') throw new Error('CRT');
+    if (roleMeta.parent.prefix !== 'PRN') throw new Error('PRN');
+    if (roleMeta.learner.perks.length !== 3) throw new Error('learner perks');
+    if (roleMeta.parent.perks.length !== 3) throw new Error('parent perks');
+  }, r);
+
+  check('makeOfflinePublicId: prefix + 4 digits', () => {
+    if (!/^LRN-\d{4}$/.test(makeOfflinePublicId('learner'))) throw new Error('learner id');
+    if (!/^CRT-\d{4}$/.test(makeOfflinePublicId('creator'))) throw new Error('creator id');
+    if (!/^PRN-\d{4}$/.test(makeOfflinePublicId('parent'))) throw new Error('parent id');
+  }, r);
+
   const ok = r.every((x) => x.ok);
   return { ok, results: r };
 }
