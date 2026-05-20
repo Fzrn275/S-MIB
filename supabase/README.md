@@ -43,6 +43,30 @@ Restart the Expo dev server. `isSupabaseConfigured()` will now be true and the
 login/registration screens switch from offline-demo behavior to the real
 Supabase auth path.
 
+## Day 3 — projects, steps, progress & badges
+Day 3 adds the learner project flow. Run these in the **SQL Editor** in order,
+after the Day 2 [`schema.sql`](./schema.sql):
+
+1. [`schema.sql`](./schema.sql) — Day 2 base (`profiles`, RLS, sequences). Skip
+   if you already ran it.
+2. [`schema_day3.sql`](./schema_day3.sql) — `projects`, `steps`, `progress`,
+   `certificates`, `achievements`, `user_achievements`, the
+   `profiles.last_active_on` column, and their RLS policies.
+3. [`seed.sql`](./seed.sql) — global shared data only: 12 published projects,
+   their steps, and the 16-badge catalog. It also bumps the projects id
+   sequence so new creator projects don't collide with the seeded ids.
+
+### Optional: a demo learner with progress
+The bottom of [`seed.sql`](./seed.sql) has a commented-out block that backfills
+one learner's progress and earned badges. To use it: register a learner in the
+app first, then edit the email in that block (`'demo@smib.app'` → the learner's
+real email), uncomment it, and run it on its own.
+
+Real learners are **not** seeded — they start with empty progress and zero
+earned badges, and accrue XP, levels, streaks and certificates as they complete
+steps. Until the credentials in step 5 are set, the app reads its offline seed
+(`src/data/seedData.js`) instead of these tables.
+
 ## How registration maps to the DB
 1. `RegStep2` → `supabase.auth.signUp(email, password, { data: metadata })`,
    where `metadata` carries the resolved `role` plus the role-specific fields.
