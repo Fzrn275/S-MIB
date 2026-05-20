@@ -10,6 +10,7 @@ import {
   roleMeta,
   makeOfflinePublicId,
   buildUserModel,
+  buildSignupMetadata,
 } from './registration';
 import { User } from '../models';
 
@@ -93,6 +94,19 @@ export function runAuthSmokeTest() {
     if (u.phone !== '+60123') throw new Error('phone');
     if (u.icNumber !== '850101-13-5678') throw new Error('ic');
     if (u.linkedChildIds.length !== 1) throw new Error('children');
+  }, r);
+
+  check('buildSignupMetadata: maps profile to the trigger snake_case keys', () => {
+    const m = buildSignupMetadata('junior_learner', { displayName: 'N', schoolName: 'SMK', grade: 'Form 2' });
+    if (m.role !== 'junior_learner') throw new Error('role');
+    if (m.display_name !== 'N') throw new Error('display_name');
+    if (m.school_name !== 'SMK' || m.grade !== 'Form 2') throw new Error('student keys');
+    if (m.locale !== 'en') throw new Error('locale default');
+    const c = buildSignupMetadata('creator', { organization: 'O', expertise: 'Robotics', yearsExperience: 5 });
+    if (c.organization !== 'O' || c.expertise !== 'Robotics') throw new Error('creator keys');
+    if (c.years_experience !== 5) throw new Error('years_experience');
+    const p = buildSignupMetadata('parent', { phone: '+60', icNumber: '850101-13-5678' });
+    if (p.phone !== '+60' || p.ic_number !== '850101-13-5678') throw new Error('parent keys');
   }, r);
 
   const ok = r.every((x) => x.ok);

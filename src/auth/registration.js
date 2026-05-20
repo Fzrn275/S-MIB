@@ -124,3 +124,23 @@ export function buildUserModel({ role, id, publicId, profile = {} }) {
       throw new Error(`buildUserModel: unsupported role ${role}`);
   }
 }
+
+/**
+ * Build the `options.data` payload for supabase.auth.signUp. Keys MUST match the
+ * snake_case names read by the handle_new_user() SQL trigger (supabase/schema.sql).
+ * `role` is the resolved model role. Omitted fields are left undefined.
+ */
+export function buildSignupMetadata(role, profile = {}) {
+  return {
+    role,
+    display_name: profile.displayName,
+    locale: profile.locale || 'en',
+    school_name: profile.schoolName,
+    grade: profile.grade,
+    organization: profile.organization,
+    expertise: profile.expertise,
+    years_experience: profile.yearsExperience,
+    phone: profile.phone,
+    ic_number: profile.icNumber,
+  };
+}
