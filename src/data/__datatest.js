@@ -14,6 +14,7 @@ import { makeProgressRepo } from '../repos/progressRepo';
 import { makeProjectRepo } from '../repos/projectRepo';
 import { makeCertificateRepo } from '../repos/certificateRepo';
 import { makeAchievementRepo } from '../repos/achievementRepo';
+import { makeCreatorRepo } from '../repos/creatorRepo';
 import { makeProgressService } from '../services/progressService';
 
 function check(name, fn, results) {
@@ -36,7 +37,7 @@ function memStore() {
 
 /** Minimal chainable Supabase fake. Records upserts/updates. */
 function fakeDb(rowsByTable = {}) {
-  const calls = { upserts: [], updates: [] };
+  const calls = { upserts: [], updates: [], inserts: [], deletes: [] };
   const api = {
     calls,
     from(table) {
@@ -47,13 +48,21 @@ function fakeDb(rowsByTable = {}) {
             eq() { return q; },
             order() { return q; },
             limit() { return q; },
+            single() { return Promise.resolve({ data: (rowsByTable[table] || [])[0] || null, error: null }); },
             then(resolve) { return Promise.resolve({ data: rowsByTable[table] || [], error: null }).then(resolve); },
           };
           return q;
         },
         upsert(payload, opts) { calls.upserts.push({ table, payload, opts }); return Promise.resolve({ error: null }); },
         update(payload) { return { eq() { calls.updates.push({ table, payload }); return Promise.resolve({ error: null }); } }; },
-        insert(payload) { calls.upserts.push({ table, payload }); return Promise.resolve({ error: null }); },
+        insert(payload) {
+          calls.inserts.push({ table, payload });
+          return {
+            select() { return { single() { return Promise.resolve({ data: { id: 4242, ...payload }, error: null }); } }; },
+            then(resolve) { return Promise.resolve({ error: null }).then(resolve); },
+          };
+        },
+        delete() { return { eq() { calls.deletes.push({ table }); return Promise.resolve({ error: null }); } }; },
       };
     },
   };
@@ -260,6 +269,51 @@ export async function runDataSmokeTest() {
     const a = buildAnalytics([new GuidedProject({ id: 9, title: 't', status: 'published', enrolled: 5, completion: 10, rating: 0 })]);
     if (a.avgRating !== null) throw new Error(`avgRating=${a.avgRating}`);
     if (a.weeklyBars.length !== 7) throw new Error('weeklyBars length');
+  }, r);
+
+  await check('creatorRepo.listMyProjects offline returns 11 seed projects', async () => {
+    const repo = makeCreatorRepo({ store: makeLocalStore(memStore()), db: null, configured: false });
+    const list = await repo.listMyProjects('creator-1');
+    if (list.length !== 11) throw new Error(`len=${list.length}`);
+    if (!list.some((p) => p.status === 'review')) throw new Error('expected a review project');
+  }, r);
+
+  await check('creatorRepo.saveProject (new) assigns id, caches, inserts project + steps', async () => {
+    const store = makeLocalStore(memStore());
+    const db = fakeDb();
+    const repo = makeCreatorRepo({ store, db, configured: true });
+    const saved = await repo.saveProject({
+      projectRow: { id: null, creator_id: 'creator-1', creator_name: 'Cara', title: 'New', category: 'Coding', difficulty: 'Easy', status: 'draft', type: 'guided', emoji: '🤖', color: 'purple-img' },
+      stepRows: [{ title: 'a', instruction: '', materials: [], xp: 40, video_url: null, proof_required: true }],
+    });
+    if (saved.id == null) throw new Error('id not assigned');
+    if (db.calls.inserts.filter((c) => c.table === 'projects').length !== 1) throw new Error('project insert');
+    if (db.calls.deletes.filter((c) => c.table === 'steps').length !== 1) throw new Error('steps delete (full-replace)');
+    if (db.calls.inserts.filter((c) => c.table === 'steps').length !== 1) throw new Error('steps insert');
+    const cache = await store.getJSON('smib.creator.projects.creator-1', {});
+    if (!cache[saved.id]) throw new Error('not cached');
+  }, r);
+
+  await check('creatorRepo.saveProject (existing) full-replaces steps and renumbers', async () => {
+    const store = makeLocalStore(memStore());
+    const repo = makeCreatorRepo({ store, db: null, configured: false });
+    const saved = await repo.saveProject({
+      projectRow: { id: 5, creator_id: 'creator-1', title: 'WT', category: 'Renewable', status: 'draft', type: 'guided' },
+      stepRows: [{ title: 'x', xp: 20 }, { title: 'y', xp: 30 }],
+    });
+    if (saved.steps.length !== 2) throw new Error('steps');
+    if (saved.steps[1].n !== 2) throw new Error('renumber');
+    const reload = await repo.getMyProjectWithSteps(5, 'creator-1');
+    if (reload.steps.length !== 2) throw new Error('persisted steps');
+  }, r);
+
+  await check('creatorRepo.setStatus updates cache + offline', async () => {
+    const store = makeLocalStore(memStore());
+    const repo = makeCreatorRepo({ store, db: null, configured: false });
+    await repo.saveProject({ projectRow: { id: 7, creator_id: 'creator-1', title: 'pH', category: 'Agriculture', status: 'draft', type: 'guided' }, stepRows: [] });
+    await repo.setStatus(7, 'review', 'creator-1');
+    const p = await repo.getMyProjectWithSteps(7, 'creator-1');
+    if (p.status !== 'review') throw new Error(`status=${p.status}`);
   }, r);
 
   const ok = r.every((x) => x.ok);
