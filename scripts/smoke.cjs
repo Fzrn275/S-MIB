@@ -41,23 +41,28 @@ if (which === 'model' || which === 'all') {
 if (which === 'auth' || which === 'all') {
   suites.push(['Auth', () => require(path.join(root, 'src/auth/__regtest.js')).runAuthSmokeTest()]);
 }
-
-let allOk = true;
-for (const [label, run] of suites) {
-  let rep;
-  try {
-    rep = run();
-  } catch (err) {
-    console.log(`✗ ${label}: suite failed to load — ${err.message}`);
-    allOk = false;
-    continue;
-  }
-  const pass = rep.results.filter((r) => r.ok).length;
-  const total = rep.results.length;
-  console.log(`${rep.ok ? '✓' : '✗'} ${label}: ${pass}/${total} passing`);
-  for (const f of rep.results.filter((r) => !r.ok)) {
-    console.log(`   • ${f.name} — ${f.error}`);
-  }
-  allOk = allOk && rep.ok;
+if (which === 'data' || which === 'all') {
+  suites.push(['Data', () => require(path.join(root, 'src/data/__datatest.js')).runDataSmokeTest()]);
 }
-process.exit(allOk ? 0 : 1);
+
+(async () => {
+  let allOk = true;
+  for (const [label, run] of suites) {
+    let rep;
+    try {
+      rep = await run();
+    } catch (err) {
+      console.log(`✗ ${label}: suite failed to load — ${err.message}`);
+      allOk = false;
+      continue;
+    }
+    const pass = rep.results.filter((r) => r.ok).length;
+    const total = rep.results.length;
+    console.log(`${rep.ok ? '✓' : '✗'} ${label}: ${pass}/${total} passing`);
+    for (const f of rep.results.filter((r) => !r.ok)) {
+      console.log(`   • ${f.name} — ${f.error}`);
+    }
+    if (!rep.ok) allOk = false;
+  }
+  process.exit(allOk ? 0 : 1);
+})();
