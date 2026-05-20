@@ -29,4 +29,7 @@ export const keys = {
   progress: (userId) => `smib.progress.${userId}`,
   certs: (userId) => `smib.certs.${userId}`,
   lastActive: (userId) => `smib.lastActive.${userId}`,
+  creatorProjects: (userId) => `smib.creator.projects.${userId}`,
+  creatorSteps: (userId) => `smib.creator.steps.${userId}`,
+  creatorNextId: 'smib.creator.nextid',
 };
