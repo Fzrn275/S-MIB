@@ -212,6 +212,13 @@ export function runModelSmokeTest() {
     if (proj.pctFor(prog) !== 50) throw new Error(`pct=${proj.pctFor(prog)}`);
   }, r);
 
+  check('Project.stepCount falls back to stepCountHint when steps not loaded', () => {
+    const p = new GuidedProject({ id: 9, title: 'T', status: 'published', stepCountHint: 7 });
+    if (p.stepCount !== 7) throw new Error(`stepCount=${p.stepCount}`);
+    const loaded = new GuidedProject({ id: 9, title: 'T', steps: [{ title: 'a' }, { title: 'b' }], stepCountHint: 7 });
+    if (loaded.stepCount !== 2) throw new Error(`loaded stepCount=${loaded.stepCount}`);
+  }, r);
+
   const ok = r.every(x => x.ok);
   return { ok, results: r };
 }

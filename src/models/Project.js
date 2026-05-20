@@ -26,6 +26,7 @@ export class Project {
     coverUrl = null,
     createdAt = new Date().toISOString(),
     type = 'guided',
+    stepCountHint = null,
   } = {}) {
     if (new.target === Project) {
       // Allow construction but encourage subclass use.
@@ -47,6 +48,7 @@ export class Project {
     this._coverUrl = coverUrl;
     this._createdAt = createdAt;
     this._type = type;
+    this._stepCountHint = stepCountHint;
     this._steps = (steps || []).map((s, i) => (s instanceof Step ? s : new Step({ ...s, n: s.n ?? i + 1 })));
     this._reviewerId = null;
     this._reviewNote = null;
@@ -71,7 +73,7 @@ export class Project {
   get createdAt() { return this._createdAt; }
   get type() { return this._type; }
   get steps() { return [...this._steps]; }
-  get stepCount() { return this._steps.length; }
+  get stepCount() { return this._steps.length || this._stepCountHint || 0; }
   get totalXp() { return this._steps.reduce((sum, s) => sum + (s.xp || 0), 0); }
 
   get isPublished() { return this._status === 'published'; }
@@ -166,6 +168,7 @@ export class Project {
       cover_url: this._coverUrl,
       created_at: this._createdAt,
       type: this._type,
+      step_count: this._steps.length || this._stepCountHint || 0,
     };
   }
 
@@ -191,6 +194,7 @@ export class Project {
       coverUrl: row.cover_url,
       createdAt: row.created_at,
       type: row.type,
+      stepCountHint: row.step_count,
       steps: stepRows.map(s => Step.fromRow(s)),
     };
     return row.type === 'open' ? new OpenProject(props) : new GuidedProject(props);
