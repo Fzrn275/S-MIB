@@ -1,29 +1,65 @@
 {
   "expo": {
-    "name": "smib-app",
+    "name": "S-MIB",
     "slug": "smib-app",
     "version": "1.0.0",
+    "scheme": "smib",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": false,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0C1A2E"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.smib.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "S-MIB uses your camera so you can capture proof photos of completed project steps.",
+        "NSPhotoLibraryUsageDescription": "S-MIB needs access to your photo library so you can pick step proof photos and profile pictures.",
+        "NSMicrophoneUsageDescription": "S-MIB may record audio when you capture step videos."
+      }
     },
     "android": {
+      "package": "com.smib.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0C1A2E",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.INTERNET"
+      ],
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "S-MIB uses your camera so you can capture proof photos of completed project steps."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "S-MIB needs access to your photo library so you can pick step proof photos and profile pictures."
+        }
+      ],
+      "expo-font",
+      "expo-secure-store"
+    ],
+    "extra": {
+      "supabaseUrl": "",
+      "supabaseAnonKey": ""
     }
   }
 }

@@ -31,7 +31,16 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
 .env*.local
+
+# extracted design prototype (not part of the RN app)
+.design-extracted/
+smib-app design.zip
+
+# logs
+expo-log.txt
+
 
 # typescript
 *.tsbuildinfo
@@ -39,3 +48,4 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+.gstack/
