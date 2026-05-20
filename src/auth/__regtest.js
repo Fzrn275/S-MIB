@@ -56,6 +56,33 @@ export function runAuthSmokeTest() {
     if (!/^PRN-\d{4}$/.test(makeOfflinePublicId('parent'))) throw new Error('parent id');
   }, r);
 
+  check('buildUserModel: learner -> JuniorLearner with toRow shape', () => {
+    const u = buildUserModel({
+      role: 'junior_learner', id: 'id1', publicId: 'LRN-0001',
+      profile: { displayName: 'Nurul', email: 'n@s.my', schoolName: 'SMK BK', grade: 'Form 2' },
+    });
+    if (u.roleLabel !== 'Junior Learner') throw new Error(u.roleLabel);
+    const row = u.toRow();
+    if (row.role !== 'junior_learner') throw new Error('row.role');
+    if (row.public_id !== 'LRN-0001') throw new Error('row.public_id');
+    if (row.school_name !== 'SMK BK' || row.grade !== 'Form 2') throw new Error('student cols');
+  }, r);
+
+  check('buildUserModel: creator + parent column shapes', () => {
+    const c = buildUserModel({
+      role: 'creator', id: 'id2', publicId: 'CRT-0001',
+      profile: { displayName: 'Cikgu A', email: 'a@s.my', organization: 'SMK BK', expertise: 'Robotics' },
+    });
+    if (c.toRow().organization !== 'SMK BK' || c.toRow().expertise !== 'Robotics') throw new Error('creator cols');
+    if (c.toRow().public_id !== 'CRT-0001') throw new Error('crt id');
+    const p = buildUserModel({
+      role: 'parent', id: 'id3', publicId: 'PRN-0001',
+      profile: { displayName: 'Encik H', email: 'h@e.my', phone: '+60123', icNumber: '850101-13-5678' },
+    });
+    if (p.toRow().phone !== '+60123' || p.toRow().ic_number !== '850101-13-5678') throw new Error('parent cols');
+    if (p.toRow().public_id !== 'PRN-0001') throw new Error('prn id');
+  }, r);
+
   const ok = r.every((x) => x.ok);
   return { ok, results: r };
 }

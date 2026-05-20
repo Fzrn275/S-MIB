@@ -98,3 +98,29 @@ export function makeOfflinePublicId(uiRole) {
   const n = Math.floor(1000 + Math.random() * 9000);
   return `${prefix}-${n}`;
 }
+
+/**
+ * Build the correct User subclass from a resolved role + collected form data.
+ * `role` is the *resolved* model role (e.g. 'junior_learner'), not the UI role.
+ * Used by RegSuccess in offline mode and anywhere a local instance is needed.
+ */
+export function buildUserModel({ role, id, publicId, profile = {} }) {
+  const base = {
+    id,
+    email: profile.email,
+    displayName: profile.displayName,
+    locale: profile.locale || 'en',
+  };
+  switch (role) {
+    case 'junior_learner':
+      return new JuniorLearner({ ...base, lrnId: publicId, schoolName: profile.schoolName, grade: profile.grade });
+    case 'senior_learner':
+      return new SeniorLearner({ ...base, lrnId: publicId, schoolName: profile.schoolName, grade: profile.grade });
+    case 'creator':
+      return new Creator({ ...base, crtId: publicId, organization: profile.organization, expertise: profile.expertise, bio: profile.bio || null });
+    case 'parent':
+      return new Parent({ ...base, prnId: publicId, phone: profile.phone, icNumber: profile.icNumber });
+    default:
+      throw new Error(`buildUserModel: unsupported role ${role}`);
+  }
+}
