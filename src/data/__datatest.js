@@ -5,6 +5,8 @@
  */
 
 import { computeReward } from './reward';
+import { buildCard } from './learnerView';
+import { GuidedProject, Progress } from '../models';
 
 function check(name, fn, results) {
   return Promise.resolve()
@@ -78,6 +80,23 @@ export async function runDataSmokeTest() {
     const row = { id: 'c1', role: 'creator', display_name: 'Cr' };
     const out = computeReward({ userRow: row, xpDelta: 50, lastActive: null, today: '2026-05-20' });
     if (out.userRow !== row) throw new Error('creator row should be untouched');
+  }, r);
+
+  await check('buildCard: pct/started/completed from progress + stepCount', () => {
+    const proj = new GuidedProject({ id: 1, title: 'T', status: 'published', stepCountHint: 6 });
+    const prog = new Progress({ userId: 'u', projectId: 1, completedStepNumbers: [1, 2, 3] });
+    const card = buildCard(proj, prog);
+    if (card.totalSteps !== 6) throw new Error(`totalSteps=${card.totalSteps}`);
+    if (card.pct !== 50) throw new Error(`pct=${card.pct}`);
+    if (!card.started) throw new Error('should be started');
+    if (card.completed) throw new Error('should not be completed');
+  }, r);
+
+  await check('buildCard: no progress means pct 0, not started', () => {
+    const proj = new GuidedProject({ id: 2, title: 'T', status: 'published', stepCountHint: 4 });
+    const card = buildCard(proj, null);
+    if (card.pct !== 0) throw new Error(`pct=${card.pct}`);
+    if (card.started) throw new Error('should not be started');
   }, r);
 
   const ok = r.every((x) => x.ok);
