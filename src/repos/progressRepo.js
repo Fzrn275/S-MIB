@@ -11,7 +11,8 @@ export function makeProgressRepo({ store = defaultStore, db = defaultDb, configu
       const { data, error } = await db.from('progress').select('*').eq('user_id', userId);
       if (!error && data) {
         const map = {};
-        data.forEach((row) => { map[row.project_id] = row; });
+        data.forEach((row) => { map[row.project_id] = row; });              // remote baseline
+        Object.values(cache).forEach((row) => { map[row.project_id] = row; }); // local wins (write-through, LWW)
         await store.setJSON(keys.progress(userId), map);
         return Object.values(map).map(Progress.fromRow);
       }

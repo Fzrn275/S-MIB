@@ -47,11 +47,16 @@ export function StepDetailScreen({ navigation, route }) {
   const markDone = async () => {
     if (saving) return;
     setSaving(true);
-    const res = await progressService.completeStep({ user, project, progress, stepN: step.n, rating });
-    if (res.xpDelta > 0) await applyStepReward({ xpDelta: res.xpDelta });
-    const doneCount = progress.completedStepNumbers.length;
-    setOverlay({ xp: step.xp, done: doneCount, total: totalSteps });
-    setSaving(false);
+    try {
+      const res = await progressService.completeStep({ user, project, progress, stepN: step.n, rating });
+      if (res.xpDelta > 0) await applyStepReward({ xpDelta: res.xpDelta });
+      setProgress(Progress.fromRow(progress.toRow()));
+      setOverlay({ xp: step.xp, done: progress.completedStepNumbers.length, total: totalSteps });
+    } catch (err) {
+      console.warn('[StepDetail] markDone failed:', err.message);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (

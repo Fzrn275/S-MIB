@@ -70,7 +70,7 @@ export const SEED_EARNED_CODES = ['first_build', 'seven_day_streak', 'five_proje
 /** Demo progress rows (no user_id; repos inject the current local user's id). */
 export const SEED_DEMO_PROGRESS = [
   { project_id: 1, completed_step_numbers: [1, 2, 3],          xp_earned: 90,  last_step_at: null, is_bookmarked: false, is_manually_completed: false, step_proofs: {}, step_ratings: {} },
-  { project_id: 2, completed_step_numbers: [1, 2, 3, 4, 5, 6], xp_earned: 210, last_step_at: null, is_bookmarked: false, is_manually_completed: false, step_proofs: {}, step_ratings: {} },
+  { project_id: 2, completed_step_numbers: [1, 2, 3, 4, 5, 6], xp_earned: 270, last_step_at: null, is_bookmarked: false, is_manually_completed: false, step_proofs: {}, step_ratings: {} },
   { project_id: 3, completed_step_numbers: [1],                xp_earned: 20,  last_step_at: null, is_bookmarked: false, is_manually_completed: false, step_proofs: {}, step_ratings: {} },
-  { project_id: 6, completed_step_numbers: [1, 2, 3, 4],       xp_earned: 130, last_step_at: null, is_bookmarked: false, is_manually_completed: false, step_proofs: {}, step_ratings: {} },
+  { project_id: 6, completed_step_numbers: [1, 2, 3, 4],       xp_earned: 140, last_step_at: null, is_bookmarked: false, is_manually_completed: false, step_proofs: {}, step_ratings: {} },
 ];

@@ -217,6 +217,21 @@ export async function runDataSmokeTest() {
     if (res.xpDelta !== 0) throw new Error(`xpDelta=${res.xpDelta}`);
   }, r);
 
+  await check('progressRepo online merge: local cache wins over remote (LWW)', async () => {
+    const store = makeLocalStore(memStore());
+    await store.setJSON('smib.progress.u1', { 1: { user_id: 'u1', project_id: 1, completed_step_numbers: [1, 2, 3], xp_earned: 90 } });
+    const db = fakeDb({ progress: [
+      { user_id: 'u1', project_id: 1, completed_step_numbers: [1], xp_earned: 20 },
+      { user_id: 'u1', project_id: 5, completed_step_numbers: [1, 2], xp_earned: 50 },
+    ] });
+    const repo = makeProgressRepo({ store, db, configured: true });
+    const all = await repo.getAllProgress('u1');
+    const p1 = all.find((p) => String(p.projectId) === '1');
+    const p5 = all.find((p) => String(p.projectId) === '5');
+    if (!p1 || p1.completedStepNumbers.length !== 3) throw new Error('local should win for p1');
+    if (!p5 || p5.completedStepNumbers.length !== 2) throw new Error('remote-only p5 missing');
+  }, r);
+
   const ok = r.every((x) => x.ok);
   return { ok, results: r };
 }
