@@ -6,7 +6,9 @@
 
 import { computeReward } from './reward';
 import { buildCard } from './learnerView';
+import { makeLocalStore } from './localStore';
 import { GuidedProject, Progress } from '../models';
+import { makeProgressRepo } from '../repos/progressRepo';
 
 function check(name, fn, results) {
   return Promise.resolve()
@@ -97,6 +99,35 @@ export async function runDataSmokeTest() {
     const card = buildCard(proj, null);
     if (card.pct !== 0) throw new Error(`pct=${card.pct}`);
     if (card.started) throw new Error('should not be started');
+  }, r);
+
+  await check('progressRepo.saveProgress writes local cache + fires upsert (null id stripped)', async () => {
+    const store = makeLocalStore(memStore());
+    const db = fakeDb();
+    const repo = makeProgressRepo({ store, db, configured: true });
+    const prog = new Progress({ userId: 'u1', projectId: 1, completedStepNumbers: [1], xpEarned: 20 });
+    await repo.saveProgress(prog);
+    const cached = await store.getJSON('smib.progress.u1', {});
+    if (!cached['1']) throw new Error('not cached');
+    if (db.calls.upserts.length !== 1) throw new Error('no upsert');
+    const up = db.calls.upserts[0];
+    if (up.table !== 'progress') throw new Error('wrong table');
+    if ('id' in up.payload) throw new Error('null id should be stripped');
+    if (up.opts.onConflict !== 'user_id,project_id') throw new Error('onConflict');
+  }, r);
+
+  await check('progressRepo offline returns seed demo progress overlaid by cache', async () => {
+    const store = makeLocalStore(memStore());
+    const repo = makeProgressRepo({ store, db: null, configured: false });
+    const all = await repo.getAllProgress('demo');
+    const p1 = all.find((p) => String(p.projectId) === '1');
+    if (!p1 || p1.completedStepNumbers.length !== 3) throw new Error('seed p1 missing');
+    // overlay: save a new state for project 1, then read again — cache wins
+    const updated = new Progress({ userId: 'demo', projectId: 1, completedStepNumbers: [1, 2, 3, 4] });
+    await repo.saveProgress(updated);
+    const all2 = await repo.getAllProgress('demo');
+    const p1b = all2.find((p) => String(p.projectId) === '1');
+    if (p1b.completedStepNumbers.length !== 4) throw new Error('cache should win');
   }, r);
 
   const ok = r.every((x) => x.ok);

@@ -20,6 +20,18 @@ const babel = require('@babel/core');
 const root = path.resolve(__dirname, '..');
 const NM = path.sep + 'node_modules' + path.sep;
 
+// React Native / Expo-only modules that the data layer imports transitively
+// (via src/services/supabase.js) but that cannot execute under plain Node —
+// they ship untranspiled RN syntax or TypeScript. The repo tests never use the
+// default Supabase client (they inject `db`/`store`/`configured`), so returning
+// a harmless stub lets the module graph load without booting Metro.
+const STUBBED_MODULES = new Set(['react-native-url-polyfill/auto', 'expo-constants']);
+const origRequire = Module.prototype.require;
+Module.prototype.require = function (id) {
+  if (STUBBED_MODULES.has(id)) return {};
+  return origRequire.call(this, id);
+};
+
 const origCompile = Module._extensions['.js'];
 Module._extensions['.js'] = function (module, filename) {
   if (filename.includes(NM)) return origCompile(module, filename);
