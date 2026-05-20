@@ -83,6 +83,18 @@ export function runAuthSmokeTest() {
     if (p.toRow().public_id !== 'PRN-0001') throw new Error('prn id');
   }, r);
 
+  check('User.fromRow restores parent phone + ic + children', () => {
+    const row = {
+      id: 'p1', email: 'p@a.b', display_name: 'Pat', role: 'parent',
+      public_id: 'PRN-0001', phone: '+60123', ic_number: '850101-13-5678',
+      linked_child_ids: ['LRN-0001'],
+    };
+    const u = User.fromRow(row);
+    if (u.phone !== '+60123') throw new Error('phone');
+    if (u.icNumber !== '850101-13-5678') throw new Error('ic');
+    if (u.linkedChildIds.length !== 1) throw new Error('children');
+  }, r);
+
   const ok = r.every((x) => x.ok);
   return { ok, results: r };
 }
