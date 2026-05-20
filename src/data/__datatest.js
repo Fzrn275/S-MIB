@@ -12,6 +12,7 @@ import { makeProgressRepo } from '../repos/progressRepo';
 import { makeProjectRepo } from '../repos/projectRepo';
 import { makeCertificateRepo } from '../repos/certificateRepo';
 import { makeAchievementRepo } from '../repos/achievementRepo';
+import { makeProgressService } from '../services/progressService';
 
 function check(name, fn, results) {
   return Promise.resolve()
@@ -170,6 +171,50 @@ export async function runDataSmokeTest() {
     if (cat.length !== 16) throw new Error(`catalog=${cat.length}`);
     const earned = await repo.listEarnedCodes('demo');
     if (earned.length !== 6) throw new Error(`earned=${earned.length}`);
+  }, r);
+
+  await check('progressService.completeStep saves progress and returns xpDelta', async () => {
+    const store = makeLocalStore(memStore());
+    const progressRepo = makeProgressRepo({ store, db: null, configured: false });
+    const certificateRepo = makeCertificateRepo({ store, db: null, configured: false });
+    const svc = makeProgressService({ progressRepo, certificateRepo });
+    const project = new GuidedProject({ id: 100, title: 'T', status: 'published',
+      steps: [{ title: 'a', xp: 40 }, { title: 'b', xp: 60 }] });
+    const progress = new Progress({ userId: 'u1', projectId: 100 });
+    const user = { id: 'u1', fullName: 'Cara' };
+    const res = await svc.completeStep({ user, project, progress, stepN: 1 });
+    if (res.xpDelta !== 40) throw new Error(`xpDelta=${res.xpDelta}`);
+    if (res.projectCompleted) throw new Error('not complete after 1/2');
+    const cached = await store.getJSON('smib.progress.u1', {});
+    if (!cached['100']) throw new Error('progress not saved');
+  }, r);
+
+  await check('progressService.completeStep issues a certificate on full completion', async () => {
+    const store = makeLocalStore(memStore());
+    const progressRepo = makeProgressRepo({ store, db: null, configured: false });
+    const certificateRepo = makeCertificateRepo({ store, db: null, configured: false });
+    const svc = makeProgressService({ progressRepo, certificateRepo });
+    const project = new GuidedProject({ id: 101, title: 'Solar', status: 'published',
+      steps: [{ title: 'a', xp: 40 }] });
+    const progress = new Progress({ userId: 'u2', projectId: 101 });
+    const user = { id: 'u2', fullName: 'Dan' };
+    const res = await svc.completeStep({ user, project, progress, stepN: 1 });
+    if (!res.projectCompleted) throw new Error('should be complete');
+    if (!res.certificate) throw new Error('no certificate');
+    const certs = await certificateRepo.listCertificates('u2');
+    if (certs.length !== 1) throw new Error(`certs=${certs.length}`);
+  }, r);
+
+  await check('progressService.completeStep gives 0 xpDelta when re-completing', async () => {
+    const store = makeLocalStore(memStore());
+    const progressRepo = makeProgressRepo({ store, db: null, configured: false });
+    const certificateRepo = makeCertificateRepo({ store, db: null, configured: false });
+    const svc = makeProgressService({ progressRepo, certificateRepo });
+    const project = new GuidedProject({ id: 102, title: 'T', status: 'published', steps: [{ title: 'a', xp: 40 }, { title: 'b', xp: 20 }] });
+    const progress = new Progress({ userId: 'u3', projectId: 102, completedStepNumbers: [1] });
+    const user = { id: 'u3', fullName: 'E' };
+    const res = await svc.completeStep({ user, project, progress, stepN: 1 });
+    if (res.xpDelta !== 0) throw new Error(`xpDelta=${res.xpDelta}`);
   }, r);
 
   const ok = r.every((x) => x.ok);
