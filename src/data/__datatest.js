@@ -7,9 +7,11 @@
 import { computeReward } from './reward';
 import { buildCard } from './learnerView';
 import { makeLocalStore } from './localStore';
-import { GuidedProject, Progress } from '../models';
+import { GuidedProject, Progress, Certificate } from '../models';
 import { makeProgressRepo } from '../repos/progressRepo';
 import { makeProjectRepo } from '../repos/projectRepo';
+import { makeCertificateRepo } from '../repos/certificateRepo';
+import { makeAchievementRepo } from '../repos/achievementRepo';
 
 function check(name, fn, results) {
   return Promise.resolve()
@@ -148,6 +150,26 @@ export async function runDataSmokeTest() {
     if (p1.steps[0].materials.length !== 6) throw new Error('materials');
     const missing = await repo.getProjectWithSteps(999);
     if (missing !== null) throw new Error('missing should be null');
+  }, r);
+
+  await check('certificateRepo.issueCertificate is idempotent per user+project', async () => {
+    const store = makeLocalStore(memStore());
+    const db = fakeDb();
+    const repo = makeCertificateRepo({ store, db, configured: true });
+    const c1 = new Certificate({ projectId: 1, userId: 'u1', projectTitle: 'Solar', userName: 'Cara' });
+    await repo.issueCertificate(c1);
+    const c2 = new Certificate({ projectId: 1, userId: 'u1', projectTitle: 'Solar', userName: 'Cara' });
+    await repo.issueCertificate(c2);
+    const list = await repo.listCertificates('u1');
+    if (list.length !== 1) throw new Error(`len=${list.length}`);
+  }, r);
+
+  await check('achievementRepo offline returns 16-badge catalog + 6 earned', async () => {
+    const repo = makeAchievementRepo({ db: null, configured: false });
+    const cat = await repo.listCatalog();
+    if (cat.length !== 16) throw new Error(`catalog=${cat.length}`);
+    const earned = await repo.listEarnedCodes('demo');
+    if (earned.length !== 6) throw new Error(`earned=${earned.length}`);
   }, r);
 
   const ok = r.every((x) => x.ok);
