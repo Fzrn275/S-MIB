@@ -9,6 +9,7 @@ import { buildCard } from './learnerView';
 import { makeLocalStore } from './localStore';
 import { GuidedProject, Progress } from '../models';
 import { makeProgressRepo } from '../repos/progressRepo';
+import { makeProjectRepo } from '../repos/projectRepo';
 
 function check(name, fn, results) {
   return Promise.resolve()
@@ -128,6 +129,25 @@ export async function runDataSmokeTest() {
     const all2 = await repo.getAllProgress('demo');
     const p1b = all2.find((p) => String(p.projectId) === '1');
     if (p1b.completedStepNumbers.length !== 4) throw new Error('cache should win');
+  }, r);
+
+  await check('projectRepo offline lists 12 seed projects with stepCount', async () => {
+    const repo = makeProjectRepo({ db: null, configured: false });
+    const list = await repo.listProjects();
+    if (list.length !== 12) throw new Error(`len=${list.length}`);
+    const p1 = list.find((p) => String(p.id) === '1');
+    if (p1.stepCount !== 6) throw new Error(`p1 stepCount=${p1.stepCount}`);
+    if (p1.title !== 'Solar Phone Charger') throw new Error('p1 title');
+  }, r);
+
+  await check('projectRepo offline getProjectWithSteps loads real P1 steps', async () => {
+    const repo = makeProjectRepo({ db: null, configured: false });
+    const p1 = await repo.getProjectWithSteps(1);
+    if (p1.steps.length !== 6) throw new Error(`steps=${p1.steps.length}`);
+    if (p1.steps[0].title !== 'Gather Materials') throw new Error('step1 title');
+    if (p1.steps[0].materials.length !== 6) throw new Error('materials');
+    const missing = await repo.getProjectWithSteps(999);
+    if (missing !== null) throw new Error('missing should be null');
   }, r);
 
   const ok = r.every((x) => x.ok);
