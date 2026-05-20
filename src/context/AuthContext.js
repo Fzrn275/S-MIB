@@ -3,6 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from '../services/supabase';
 import { User } from '../models';
 import { buildSignupMetadata } from '../auth/registration';
+import { computeReward } from '../data/reward';
+import { keys } from '../data/localStore';
 
 const AuthContext = createContext({
   user: null,
@@ -18,6 +20,7 @@ const AuthContext = createContext({
   resendOtp: async () => {},
   fetchMyProfile: async () => null,
   resetPassword: async () => {},
+  applyStepReward: async () => {},
 });
 
 const LOCAL_USER_KEY = 'smib.local.user';
@@ -157,6 +160,38 @@ export function AuthProvider({ children }) {
     if (session) await hydrateProfile(session);
   }, [session, hydrateProfile]);
 
+  // Apply XP/level/streak after a step completion. Owns the user/profile.
+  const applyStepReward = useCallback(async ({ xpDelta = 0 } = {}) => {
+    if (!user || typeof user.isLearner !== 'function' || !user.isLearner()) return;
+    const today = new Date().toISOString().slice(0, 10);
+    const lastKey = keys.lastActive(user.id);
+
+    let lastActive = null;
+    try { lastActive = await AsyncStorage.getItem(lastKey); } catch { /* ignore */ }
+
+    const { userRow, lastActive: lastActiveNext } = computeReward({
+      userRow: user.toRow(), xpDelta, lastActive, today,
+    });
+
+    const next = User.fromRow(userRow);
+    setUser(next);
+
+    try {
+      await AsyncStorage.setItem(LOCAL_USER_KEY, JSON.stringify(userRow));
+      if (lastActiveNext) await AsyncStorage.setItem(lastKey, lastActiveNext);
+    } catch (err) {
+      console.warn('[auth] reward local persist failed:', err.message);
+    }
+
+    if (configured && supabase && session?.user) {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ xp: userRow.xp, level: userRow.level, streak: userRow.streak, last_active_on: lastActiveNext })
+        .eq('id', user.id);
+      if (error) console.warn('[auth] reward persist failed:', error.message);
+    }
+  }, [user, configured, session]);
+
   // Local-only setter used when Supabase isn't wired (demo mode).
   const setLocalUser = useCallback(async (userInstance) => {
     setUser(userInstance);
@@ -170,11 +205,13 @@ export function AuthProvider({ children }) {
       user, session, loading, configured,
       signIn, signOut, refreshProfile, setLocalUser,
       signUpWithProfile, verifyEmailOtp, resendOtp, fetchMyProfile, resetPassword,
+      applyStepReward,
     }),
     [
       user, session, loading, configured,
       signIn, signOut, refreshProfile, setLocalUser,
       signUpWithProfile, verifyEmailOtp, resendOtp, fetchMyProfile, resetPassword,
+      applyStepReward,
     ]
   );
 
