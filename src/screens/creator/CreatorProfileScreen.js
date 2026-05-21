@@ -1,16 +1,17 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { AppHeader } from '../../components/AppHeader';
 import { StatCard } from '../../components/StatCard';
+import { SettingsRow } from '../../components/SettingsRow';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
 import { buildAnalytics } from '../../data/creatorStats';
 import { colors, spacing, sizes, radii, avatarColor, initials } from '../../theme/tokens';
 
-export function CreatorProfileScreen() {
+export function CreatorProfileScreen({ navigation }) {
   const { user, signOut } = useAuth();
   const [projects, setProjects] = useState([]);
 
@@ -28,7 +29,10 @@ export function CreatorProfileScreen() {
     <ScreenBackground>
       <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl }}>
         <AppHeader paddingBottom={spacing.xl}>
-          <Text style={styles.title}>Profile</Text>
+          <View style={styles.headerRow}>
+            <Text style={styles.title}>Profile</Text>
+            <Pressable onPress={() => navigation.navigate('Settings')} hitSlop={8}><Text style={styles.gear}>⚙️</Text></Pressable>
+          </View>
         </AppHeader>
 
         <View style={styles.card}>
@@ -50,6 +54,11 @@ export function CreatorProfileScreen() {
           <StatCard value={stats.avgRating || '—'} label="Avg ★" tone="green" />
         </View>
 
+        <View style={{ marginTop: spacing.lg }}>
+          <SettingsRow icon="👤" iconBg="rgba(245,158,11,0.15)" label="Profile Settings" sub="Edit name, organization, bio" onPress={() => navigation.navigate('ProfileSettings')} />
+          <SettingsRow icon="⚙️" iconBg={colors.glass} label="Settings" sub="Privacy, language, account" onPress={() => navigation.navigate('Settings')} />
+        </View>
+
         <View style={styles.cta}>
           <Button mode="outlined" textColor={colors.white} style={{ borderColor: colors.border }} onPress={signOut}>Sign out</Button>
         </View>
@@ -59,6 +68,8 @@ export function CreatorProfileScreen() {
 }
 
 const styles = StyleSheet.create({
+  headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  gear: { fontSize: sizes.textXl },
   title: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900' },
   card: { alignItems: 'center', marginHorizontal: spacing.lg, marginTop: -spacing.xl + 4, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.lg, padding: spacing.lg },
   avatar: { width: 64, height: 64, borderRadius: 32, alignItems: 'center', justifyContent: 'center', marginBottom: spacing.sm },
