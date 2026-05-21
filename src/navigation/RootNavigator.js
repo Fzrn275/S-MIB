@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth } from '../context/AuthContext';
 import { AuthStack } from './AuthStack';
 import { LearnerStack } from './LearnerStack';
-import { CreatorTabs } from './CreatorTabs';
+import { CreatorStack } from './CreatorStack';
 import { ParentTabs } from './ParentTabs';
 import { ScreenBackground } from '../components/ScreenBackground';
 import { colors } from '../theme/tokens';
@@ -28,7 +28,7 @@ function RoleRouter() {
   const { user } = useAuth();
   if (!user) return null; // RootNavigator picks AuthStack in this case
   if (user.isLearner && user.isLearner()) return <LearnerStack />;
-  if (user.isCreator && user.isCreator()) return <CreatorTabs />;
+  if (user.isCreator && user.isCreator()) return <CreatorStack />;
   if (user.isParent && user.isParent()) return <ParentTabs />;
   // Fallback: treat unknown role as learner shell so the app never dead-ends.
   return <LearnerStack />;

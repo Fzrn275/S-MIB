@@ -1,7 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { PlaceholderScreen } from '../screens/_PlaceholderScreen';
+import { CreatorDashboardScreen } from '../screens/creator/CreatorDashboardScreen';
+import { CreatorProjectsScreen } from '../screens/creator/CreatorProjectsScreen';
+import { CreatorAnalyticsScreen } from '../screens/creator/CreatorAnalyticsScreen';
+import { CreatorProfileScreen } from '../screens/creator/CreatorProfileScreen';
 import { colors } from '../theme/tokens';
 
 const Tab = createBottomTabNavigator();
@@ -33,10 +36,10 @@ export function CreatorTabs() {
         tabBarIcon: iconFor(route.name),
       })}
     >
-      <Tab.Screen name="Dashboard" component={PlaceholderScreen} />
-      <Tab.Screen name="Projects" component={PlaceholderScreen} />
-      <Tab.Screen name="Analytics" component={PlaceholderScreen} />
-      <Tab.Screen name="Profile" component={PlaceholderScreen} />
+      <Tab.Screen name="Dashboard" component={CreatorDashboardScreen} />
+      <Tab.Screen name="Projects" component={CreatorProjectsScreen} />
+      <Tab.Screen name="Analytics" component={CreatorAnalyticsScreen} />
+      <Tab.Screen name="Profile" component={CreatorProfileScreen} />
     </Tab.Navigator>
   );
 }
