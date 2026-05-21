@@ -1,7 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { PlaceholderScreen } from '../screens/_PlaceholderScreen';
+import { ParentDashboardScreen } from '../screens/parent/ParentDashboardScreen';
+import { ParentActivityScreen } from '../screens/parent/ParentActivityScreen';
+import { ParentProfileScreen } from '../screens/parent/ParentProfileScreen';
 import { colors } from '../theme/tokens';
 
 const Tab = createBottomTabNavigator();
@@ -32,9 +34,9 @@ export function ParentTabs() {
         tabBarIcon: iconFor(route.name),
       })}
     >
-      <Tab.Screen name="Home" component={PlaceholderScreen} />
-      <Tab.Screen name="Activity" component={PlaceholderScreen} />
-      <Tab.Screen name="Profile" component={PlaceholderScreen} />
+      <Tab.Screen name="Home" component={ParentDashboardScreen} />
+      <Tab.Screen name="Activity" component={ParentActivityScreen} />
+      <Tab.Screen name="Profile" component={ParentProfileScreen} />
     </Tab.Navigator>
   );
 }

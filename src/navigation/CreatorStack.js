@@ -5,6 +5,7 @@ import { CreatorProjectDetailScreen } from '../screens/creator/CreatorProjectDet
 import { CreatorNewProjectScreen } from '../screens/creator/CreatorNewProjectScreen';
 import { CreatorAddStepsScreen } from '../screens/creator/CreatorAddStepsScreen';
 import { CreatorEditProjectScreen } from '../screens/creator/CreatorEditProjectScreen';
+import { getSharedScreens } from './sharedScreens';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ export function CreatorStack() {
       <Stack.Screen name="CreatorNewProject" component={CreatorNewProjectScreen} />
       <Stack.Screen name="CreatorAddSteps" component={CreatorAddStepsScreen} />
       <Stack.Screen name="CreatorEditProject" component={CreatorEditProjectScreen} />
+      {getSharedScreens(Stack)}
     </Stack.Navigator>
   );
 }

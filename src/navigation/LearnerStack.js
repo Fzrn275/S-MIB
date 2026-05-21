@@ -4,6 +4,7 @@ import { LearnerTabs } from './LearnerTabs';
 import { MyProjectsScreen } from '../screens/learner/MyProjectsScreen';
 import { ProjectDetailScreen } from '../screens/learner/ProjectDetailScreen';
 import { StepDetailScreen } from '../screens/learner/StepDetailScreen';
+import { getSharedScreens } from './sharedScreens';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ export function LearnerStack() {
       <Stack.Screen name="MyProjects" component={MyProjectsScreen} />
       <Stack.Screen name="ProjectDetail" component={ProjectDetailScreen} />
       <Stack.Screen name="StepDetail" component={StepDetailScreen} />
+      {getSharedScreens(Stack)}
     </Stack.Navigator>
   );
 }
