@@ -2,6 +2,7 @@
   "expo": {
     "name": "S-MIB",
     "slug": "smib-app",
+    "owner": "fzrn275",
     "version": "1.0.0",
     "scheme": "smib",
     "orientation": "portrait",
@@ -34,7 +35,8 @@
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
-        "android.permission.INTERNET"
+        "android.permission.INTERNET",
+        "android.permission.RECORD_AUDIO"
       ],
       "edgeToEdgeEnabled": true
     },
@@ -59,7 +61,10 @@
     ],
     "extra": {
       "supabaseUrl": "",
-      "supabaseAnonKey": ""
+      "supabaseAnonKey": "",
+      "eas": {
+        "projectId": "fa53f475-1e3a-4e28-8026-8658b953f919"
+      }
     }
   }
 }
