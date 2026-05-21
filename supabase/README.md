@@ -82,6 +82,23 @@ projects don't collide with the seeded ids. Until the credentials in step 5 are
 set, creator authoring runs against the offline store (`src/data/localStore.js`)
 instead of these tables.
 
+## Day 5 — parent flow
+Day 5 adds the parent experience (link a child, view their progress). Run this in
+the **SQL Editor** after [`schema_day4.sql`](./schema_day4.sql):
+
+5. [`schema_day5.sql`](./schema_day5.sql) — adds one `find_learner_by_public_id`
+   SECURITY DEFINER function so a parent can look up a learner by their public
+   `LRN-####` id (returning only `display_name`, `school_name`, `grade`, `level`,
+   `public_id` — no private data). Linking writes the id into the parent's own
+   `linked_child_ids` via the existing `profiles_update_own` policy. **No new
+   tables.**
+
+Children's progress is **not** read live online in this build (no cross-user
+progress RLS): the parent dashboard, child progress, activity feed and
+notifications run from the offline seed (`src/data/seedData.js`) so the demo works
+without a second linked account. The link lookup itself is real when the
+credentials in step 5 are set.
+
 ## How registration maps to the DB
 1. `RegStep2` → `supabase.auth.signUp(email, password, { data: metadata })`,
    where `metadata` carries the resolved `role` plus the role-specific fields.

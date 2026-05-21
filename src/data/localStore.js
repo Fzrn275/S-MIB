@@ -32,4 +32,7 @@ export const keys = {
   creatorProjects: (userId) => `smib.creator.projects.${userId}`,
   creatorSteps: (userId) => `smib.creator.steps.${userId}`,
   creatorNextId: 'smib.creator.nextid',
+  lang: 'smib.lang',
+  notifPrefs: (userId) => `smib.notifprefs.${userId}`,
+  parentLinks: (userId) => `smib.parent.links.${userId}`,
 };

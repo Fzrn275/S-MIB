@@ -89,3 +89,52 @@ export const SEED_CREATOR_PROJECTS = [
   { id: 10, title: 'Solar Water Heater',     category: 'Renewable',   difficulty: 'Medium', duration: '1 week',    description: 'Passive solar water heating panel from copper pipe.', emoji: '☀️', color: 'amber-img',  creator_id: null, creator_name: 'Ahmad Khalil', status: 'review',    enrolled: 0,   completion: 0,  rating: 0,   type: 'guided', step_count: 6 },
   { id: 11, title: 'Earthquake Detector',    category: 'Coding',      difficulty: 'Hard',   duration: '1–2 days',  description: 'Seismograph with MPU-6050, SD logging and FFT analysis.', emoji: '📳', color: 'red-img',    creator_id: null, creator_name: 'Ahmad Khalil', status: 'published', enrolled: 29,  completion: 18, rating: 4.8, type: 'guided', step_count: 8 },
 ];
+
+// ── Parent flow seed (Day 5) ─────────────────────────────────────────────────
+/**
+ * Offline demo children for the Parent flow. Plain denormalized view objects
+ * (there is no `children` table — see the Day 5 spec). `public_id` is the
+ * learner's LRN id used by the Link Child lookup; the demo links `LRN-4821`.
+ */
+export const SEED_CHILDREN = [
+  { id: '1', public_id: 'LRN-4821', name: 'Fazrin Ezan', init: 'FE', color: '#F59E0B', grade: 'Form 4', school: 'SMK Bandar Kuching', level: 4, rank: 'Maker Apprentice', xp: 620, xpMax: 1000, active: true,  lastSeen: 'Active now',         active_proj: 3, done_proj: 7, badges: 12, streak: 12, goal: 'Complete the Solar Phone Charger project and earn the Electronics Explorer badge before end of term.', goalDate: '30 June 2026' },
+  { id: '2', public_id: 'LRN-2910', name: 'Nurul Hana',  init: 'NH', color: '#8B5CF6', grade: 'Form 2', school: 'SMK Bandar Kuching', level: 2, rank: 'Builder',          xp: 320, xpMax: 600,  active: false, lastSeen: 'Last active 2d ago', active_proj: 1, done_proj: 3, badges: 5,  streak: 3,  goal: 'Enrol in and complete 2 more projects to reach Level 3.',                                            goalDate: '31 July 2026' },
+];
+
+/** Children's activity feed (newest first). Mirrors App.jsx ACTIVITY_FEED. */
+export const SEED_PARENT_ACTIVITY = [
+  { child: 'Fazrin', init: 'FE', color: '#F59E0B', icon: '⚡', type: 'xp',     title: 'Completed Step 4 of Solar Phone Charger', sub: '+50 XP earned',            time: '2m', group: 'Today',     unread: true  },
+  { child: 'Fazrin', init: 'FE', color: '#F59E0B', icon: '🏆', type: 'badge',  title: 'Unlocked "7 Day Streak" Badge',           sub: 'Bronze tier achievement',  time: '1h', group: 'Today',     unread: true  },
+  { child: 'Nurul',  init: 'NH', color: '#8B5CF6', icon: '📚', type: 'enrol',  title: 'Enrolled in Arduino Plant Monitor',       sub: 'New project started',      time: '3h', group: 'Today',     unread: false },
+  { child: 'Fazrin', init: 'FE', color: '#F59E0B', icon: '🔥', type: 'streak', title: '12-Day Streak Milestone!',                sub: 'Personal best so far',     time: '5h', group: 'Today',     unread: false },
+  { child: 'Nurul',  init: 'NH', color: '#8B5CF6', icon: '⚡', type: 'xp',     title: 'Completed Step 2 of LED Circuit Board',   sub: '+30 XP earned',            time: '1d', group: 'Yesterday', unread: false },
+  { child: 'Fazrin', init: 'FE', color: '#F59E0B', icon: '📊', type: 'lb',     title: 'Moved to #5 on School Leaderboard',       sub: 'Up 2 positions this week',  time: '2d', group: 'Yesterday', unread: false },
+  { child: 'Nurul',  init: 'NH', color: '#8B5CF6', icon: '📜', type: 'cert',   title: 'Certificate Issued',                      sub: 'LED Circuit Board — completed', time: '3d', group: 'This Week', unread: false },
+  { child: 'Fazrin', init: 'FE', color: '#F59E0B', icon: '🌟', type: 'badge',  title: 'Unlocked "5 Projects" Badge',             sub: 'Silver tier achievement',  time: '5d', group: 'This Week', unread: false },
+];
+
+/** Parent-specific notifications. Mirrors App.jsx PARENT_NOTIFS. */
+export const SEED_PARENT_NOTIFS = [
+  { type: 'step',     icon: '⚡', bg: 'rgba(245,158,11,0.15)', title: 'Step Completed',     sub: 'Fazrin completed Step 4 of Solar Phone Charger. +50 XP.', time: '2m', unread: true,  group: 'Today'     },
+  { type: 'badge',    icon: '🏅', bg: 'rgba(168,85,247,0.15)', title: 'Badge Unlocked',     sub: 'Fazrin earned the "7 Day Streak" Bronze badge.',          time: '1h', unread: true,  group: 'Today'     },
+  { type: 'enrol',    icon: '📚', bg: 'rgba(14,116,144,0.15)', title: 'New Project Started', sub: 'Nurul enrolled in Arduino Plant Monitor.',               time: '3h', unread: false, group: 'Today'     },
+  { type: 'streak',   icon: '🔥', bg: 'rgba(234,88,12,0.15)',  title: 'Streak Milestone',   sub: 'Fazrin has a 12-day learning streak — personal best!',    time: '5h', unread: false, group: 'Today'     },
+  { type: 'step',     icon: '⚡', bg: 'rgba(245,158,11,0.15)', title: 'Step Completed',     sub: 'Nurul completed Step 2 of LED Circuit Board. +30 XP.',    time: '1d', unread: false, group: 'Yesterday' },
+  { type: 'complete', icon: '✅', bg: 'rgba(22,101,52,0.15)',  title: 'Project Completed!', sub: 'Fazrin finished Solar Phone Charger and earned a cert.',  time: '2d', unread: false, group: 'Yesterday' },
+  { type: 'goal',     icon: '🎯', bg: 'rgba(14,116,144,0.15)', title: 'Goal Progress',      sub: 'Fazrin is 80% towards their June goal.',                  time: '3d', unread: false, group: 'This Week' },
+  { type: 'cert',     icon: '📜', bg: 'rgba(245,158,11,0.15)', title: 'Certificate Earned', sub: 'Fazrin earned a Project Completion certificate.',         time: '5d', unread: false, group: 'This Week' },
+];
+
+/**
+ * Public creator directory keyed by full name. Powers the view-creator modal
+ * shown from Child Progress (and reusable by the learner Project Detail).
+ * Mirrors SharedExtras.jsx CREATORS.
+ */
+export const SEED_CREATORS = {
+  'Ahmad Khalil':   { init: 'AK', color: '#F59E0B', role: 'STEM Educator',    org: 'SMK Bandar Kuching', bio: 'Maker since 2015. Passionate about hands-on electronics & solar projects. National finalist, MSTC Maker Faire 2023.', projects: 5, students: 1142, rating: 4.85, badges: 'Featured Creator · Verified', id: 'CRT-2037' },
+  'Siti Rahimah':   { init: 'SR', color: '#22C55E', role: 'Robotics Coach',   org: 'SMK Bandar Kuching', bio: 'Specialises in Arduino & sensor-based agriculture projects. Mentor for the Sarawak State Robotics Team.', projects: 3, students: 287, rating: 4.7, badges: 'Verified', id: 'CRT-1193' },
+  'David Anak Lee': { init: 'DL', color: '#0E7490', role: 'Renewable Energy', org: 'SMK Miri',           bio: 'Civil engineer turned educator. Builds wind, solar and micro-hydro projects from recycled materials.', projects: 2, students: 114, rating: 4.55, badges: 'Verified', id: 'CRT-3381' },
+  'Liyana Binti':   { init: 'LB', color: '#22C55E', role: 'Agritech Mentor',  org: 'SMK Sibu',           bio: 'Champion of low-cost hydroponics and biogas. Trained over 200 rural youth makers across Borneo.', projects: 2, students: 167, rating: 4.7, badges: 'Verified', id: 'CRT-5527' },
+  'Nurul Hana':     { init: 'NH', color: '#8B5CF6', role: 'Junior Creator',   org: 'SMK Bandar Kuching', bio: 'Form 5 student who turned her science fair project into a published rain gauge tutorial.', projects: 1, students: 44, rating: 4.4, badges: 'Student Creator', id: 'CRT-7742' },
+  'Kevin Jawa':     { init: 'KJ', color: '#F59E0B', role: 'IoT Engineer',     org: 'SMK Bintulu',        bio: 'Industry-trained IoT specialist. Brings real-world automation projects to the classroom.', projects: 1, students: 67, rating: 4.6, badges: 'Industry Partner', id: 'CRT-8815' },
+};

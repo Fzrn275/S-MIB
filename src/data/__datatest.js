@@ -8,8 +8,12 @@ import { computeReward } from './reward';
 import { buildCard } from './learnerView';
 import { categoryMeta } from './categoryMeta';
 import { buildAnalytics } from './creatorStats';
+import { aggregate, xpPercent } from './parentStats';
+import { childTabs, filterAndGroup } from './parentActivity';
+import { SEED_CHILDREN, SEED_PARENT_ACTIVITY } from './seedData';
 import { makeLocalStore } from './localStore';
-import { GuidedProject, Progress, Certificate, Creator, VerifiedCreator } from '../models';
+import { GuidedProject, Progress, Certificate, Creator, VerifiedCreator, Parent } from '../models';
+import { makeParentRepo } from '../repos/parentRepo';
 import { makeProgressRepo } from '../repos/progressRepo';
 import { makeProjectRepo } from '../repos/projectRepo';
 import { makeCertificateRepo } from '../repos/certificateRepo';
@@ -38,9 +42,14 @@ function memStore() {
 
 /** Minimal chainable Supabase fake. Records upserts/updates. */
 function fakeDb(rowsByTable = {}) {
-  const calls = { upserts: [], updates: [], inserts: [], deletes: [] };
+  const calls = { upserts: [], updates: [], inserts: [], deletes: [], rpcs: [] };
   const api = {
     calls,
+    rpc(name, args) {
+      calls.rpcs.push({ name, args });
+      const rows = (rowsByTable.__rpc && rowsByTable.__rpc[name]) || [];
+      return Promise.resolve({ data: rows, error: null });
+    },
     from(table) {
       return {
         select() {
@@ -353,6 +362,94 @@ export async function runDataSmokeTest() {
     const user = new Creator({ id: 'creator-1', email: 'c@x.y', displayName: 'Cara' });
     const saved = await svc.saveProject({ user, project: { id: 6, title: 'LED', category: 'Electronics', status: 'published' }, steps: [], submit: false });
     if (saved.status !== 'review') throw new Error(`status=${saved.status}`);
+  }, r);
+
+  // ── Parent flow (Day 5) ────────────────────────────────────────────────────
+  await check('parentStats.aggregate sums active/done/badges over children', () => {
+    const a = aggregate(SEED_CHILDREN);
+    if (a.totalActive !== 4) throw new Error(`totalActive=${a.totalActive}`);
+    if (a.totalDone !== 10) throw new Error(`totalDone=${a.totalDone}`);
+    if (a.totalBadges !== 17) throw new Error(`totalBadges=${a.totalBadges}`);
+  }, r);
+
+  await check('parentStats.aggregate is all-zero for empty list', () => {
+    const a = aggregate([]);
+    if (a.totalActive || a.totalDone || a.totalBadges) throw new Error('expected zeros');
+  }, r);
+
+  await check('parentStats.xpPercent clamps and rounds', () => {
+    if (xpPercent({ xp: 620, xpMax: 1000 }) !== 62) throw new Error('62 expected');
+    if (xpPercent({ xp: 0, xpMax: 0 }) !== 0) throw new Error('0 when no max');
+  }, r);
+
+  await check('parentActivity.childTabs is All + unique names in feed order', () => {
+    const tabs = childTabs(SEED_PARENT_ACTIVITY);
+    if (tabs[0] !== 'All') throw new Error('first tab must be All');
+    if (!(tabs.includes('Fazrin') && tabs.includes('Nurul'))) throw new Error('missing child');
+    if (tabs.length !== 3) throw new Error(`tabs=${tabs.length}`);
+  }, r);
+
+  await check('parentActivity.filterAndGroup filters by child and groups by day', () => {
+    const groups = filterAndGroup(SEED_PARENT_ACTIVITY, 'Nurul');
+    const flat = groups.flatMap((g) => g.items);
+    if (!flat.every((a) => a.child === 'Nurul')) throw new Error('filter leaked');
+    if (!groups.some((g) => g.group === 'Today')) throw new Error('missing Today group');
+    const all = filterAndGroup(SEED_PARENT_ACTIVITY, 'All');
+    if (all.flatMap((g) => g.items).length !== SEED_PARENT_ACTIVITY.length) throw new Error('All should keep every row');
+  }, r);
+
+  await check('parentRepo.lookupChildByPublicId offline matches seed (LRN-4821)', async () => {
+    const store = makeLocalStore(memStore());
+    const repo = makeParentRepo({ store, db: null, configured: false });
+    const res = await repo.lookupChildByPublicId('lrn-4821');
+    if (!res.found) throw new Error('should find seed child');
+    if (res.child.name !== 'Fazrin Ezan') throw new Error(`name=${res.child.name}`);
+  }, r);
+
+  await check('parentRepo.lookupChildByPublicId rejects a malformed id', async () => {
+    const repo = makeParentRepo({ store: makeLocalStore(memStore()), db: null, configured: false });
+    const res = await repo.lookupChildByPublicId('1234');
+    if (res.found || !res.error) throw new Error('expected validation error');
+  }, r);
+
+  await check('parentRepo.lookupChildByPublicId offline not-found returns error', async () => {
+    const repo = makeParentRepo({ store: makeLocalStore(memStore()), db: null, configured: false });
+    const res = await repo.lookupChildByPublicId('LRN-9999');
+    if (res.found || !res.error) throw new Error('expected not-found');
+  }, r);
+
+  await check('parentRepo.lookupChildByPublicId online uses the rpc row', async () => {
+    const store = makeLocalStore(memStore());
+    const db = fakeDb({ __rpc: { find_learner_by_public_id: [{ id: 'uuid-1', display_name: 'Aiman', school_name: 'SMK X', grade: 'Form 3', level: 3, public_id: 'LRN-0007' }] } });
+    const repo = makeParentRepo({ store, db, configured: true });
+    const res = await repo.lookupChildByPublicId('LRN-0007');
+    if (!res.found) throw new Error('rpc row should resolve');
+    if (res.child.name !== 'Aiman') throw new Error(`name=${res.child.name}`);
+    if (db.calls.rpcs.length !== 1) throw new Error('rpc not called');
+  }, r);
+
+  await check('parentRepo.linkChild appends id (deduped), caches, and updates profile', async () => {
+    const store = makeLocalStore(memStore());
+    const db = fakeDb();
+    const repo = makeParentRepo({ store, db, configured: true });
+    const parent = new Parent({ id: 'p1', email: 'p@x.y', displayName: 'Halimah', linkedChildIds: [] });
+    const child = { id: 'uuid-1', name: 'Aiman', public_id: 'LRN-0007' };
+    await repo.linkChild(parent, child);
+    await repo.linkChild(parent, child); // dedupe
+    if (parent.linkedChildIds.length !== 1) throw new Error(`linked=${parent.linkedChildIds.length}`);
+    const cache = await store.getJSON('smib.parent.links.p1', {});
+    if (!cache['uuid-1']) throw new Error('child not cached');
+    if (!db.calls.updates.some((u) => u.table === 'profiles')) throw new Error('no profile update');
+  }, r);
+
+  await check('parentRepo.listChildren returns seed plus a locally-linked child', async () => {
+    const store = makeLocalStore(memStore());
+    const repo = makeParentRepo({ store, db: null, configured: false });
+    const parent = new Parent({ id: 'p2', email: 'p@x.y', displayName: 'Halimah', linkedChildIds: [] });
+    await repo.linkChild(parent, { id: 'uuid-9', name: 'New Kid', public_id: 'LRN-0009' });
+    const kids = await repo.listChildren(parent);
+    if (kids.length !== SEED_CHILDREN.length + 1) throw new Error(`count=${kids.length}`);
+    if (!kids.some((k) => String(k.id) === 'uuid-9')) throw new Error('linked child missing');
   }, r);
 
   const ok = r.every((x) => x.ok);
