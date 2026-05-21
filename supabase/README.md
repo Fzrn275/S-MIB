@@ -67,6 +67,21 @@ earned badges, and accrue XP, levels, streaks and certificates as they complete
 steps. Until the credentials in step 5 are set, the app reads its offline seed
 (`src/data/seedData.js`) instead of these tables.
 
+## Day 4 — creator authoring
+Day 4 lets creators author and manage their own projects + steps. Run this in
+the **SQL Editor** after [`schema_day3.sql`](./schema_day3.sql) (and `seed.sql`):
+
+4. [`schema_day4.sql`](./schema_day4.sql) — adds creator-write RLS:
+   INSERT/UPDATE/DELETE on `projects` for the owning creator (`creator_id =
+   auth.uid()`), and INSERT/UPDATE/DELETE on `steps` whose parent project the
+   caller owns. **No new tables and no new seed** — creators author their own
+   content from the app, so there is nothing to pre-populate.
+
+The Day 3 `seed.sql` already bumps the projects id sequence so creator-authored
+projects don't collide with the seeded ids. Until the credentials in step 5 are
+set, creator authoring runs against the offline store (`src/data/localStore.js`)
+instead of these tables.
+
 ## How registration maps to the DB
 1. `RegStep2` → `supabase.auth.signUp(email, password, { data: metadata })`,
    where `metadata` carries the resolved `role` plus the role-specific fields.
