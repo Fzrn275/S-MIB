@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput, Button, HelperText } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { ForgotPasswordModal } from '../../components/ForgotPasswordModal';
-import { SmokeBadge } from '../../components/SmokeBadge';
 import { colors, spacing, sizes } from '../../theme/tokens';
 import { useAuth } from '../../context/AuthContext';
 import { SeniorLearner, JuniorLearner, VerifiedCreator, Parent } from '../../models';
@@ -163,7 +162,7 @@ export function LoginScreen({ navigation }) {
             </View>
 
             <View style={styles.demoCard}>
-              <Text style={styles.demoTitle}>Dev / demo entry (no backend)</Text>
+              <Text style={styles.demoTitle}>Guest Access</Text>
               <View style={styles.demoRow}>
                 <Button compact mode="outlined" textColor={colors.white} onPress={() => onDemoRole('senior')}>
                   Senior Learner
@@ -181,8 +180,6 @@ export function LoginScreen({ navigation }) {
                 </Button>
               </View>
             </View>
-
-            <SmokeBadge />
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>

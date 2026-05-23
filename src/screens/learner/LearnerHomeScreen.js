@@ -54,7 +54,7 @@ export function LearnerHomeScreen({ navigation }) {
           <View style={{ width: spacing.sm }} />
           <StatCard value={done.length} label="Done" tone="yellow" onPress={() => navigation.navigate('MyProjects')} />
           <View style={{ width: spacing.sm }} />
-          <StatCard value={badgeCount} label="Badges" tone="green" />
+          <StatCard value={badgeCount} label="Badges" tone="green" onPress={() => navigation.navigate('Progress')} />
         </View>
 
         {loading ? (
