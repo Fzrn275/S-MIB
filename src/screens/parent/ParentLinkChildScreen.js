@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable, TextInput, StyleSheet, ActivityIndic
 import { Button } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { useAuth } from '../../context/AuthContext';
 import { parentRepo } from '../../repos';
@@ -47,7 +48,7 @@ export function ParentLinkChildScreen({ navigation }) {
     <ScreenBackground>
       <AppHeader paddingBottom={spacing.md}>
         <View style={styles.titleRow}>
-          <Pressable onPress={() => navigation.goBack()} hitSlop={10}><Text style={styles.back}>←</Text></Pressable>
+          <BackButton onPress={() => navigation.goBack()} />
           <Text style={styles.headerTitle}>Link a Child</Text>
         </View>
       </AppHeader>

@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { ProjectListCard } from '../../components/ProjectListCard';
 import { useAuth } from '../../context/AuthContext';
@@ -46,7 +47,7 @@ export function MyProjectsScreen({ navigation }) {
     <ScreenBackground>
       <AppHeader paddingBottom={spacing.md}>
         <View style={styles.titleRow}>
-          <Pressable onPress={() => navigation.goBack()} hitSlop={10}><Text style={styles.back}>←</Text></Pressable>
+          <BackButton onPress={() => navigation.goBack()} />
           <Text style={styles.title}>My Projects</Text>
         </View>
       </AppHeader>

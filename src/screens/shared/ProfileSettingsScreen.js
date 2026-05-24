@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { FormTextField } from '../../components/FormTextField';
 import { useAuth } from '../../context/AuthContext';
@@ -79,7 +80,7 @@ export function ProfileSettingsScreen({ navigation }) {
     <ScreenBackground>
       <AppHeader paddingBottom={spacing.md}>
         <View style={styles.titleRow}>
-          <Pressable onPress={() => navigation.goBack()} hitSlop={10}><Text style={styles.back}>←</Text></Pressable>
+          <BackButton onPress={() => navigation.goBack()} />
           <Text style={styles.headerTitle}>Profile Settings</Text>
           <Pressable onPress={onSave} hitSlop={10} disabled={busy}><Text style={styles.save}>{busy ? '…' : 'Save'}</Text></Pressable>
         </View>

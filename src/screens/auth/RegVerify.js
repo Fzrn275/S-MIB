@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Button, HelperText } from 'react-native-paper';
+import { HelperText } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { AuthHeader } from '../../components/AuthHeader';
 import { OtpInput } from '../../components/OtpInput';
+import { AppButton } from '../../components/AppButton';
 import { useAuth } from '../../context/AuthContext';
 import { makeOfflinePublicId } from '../../auth/registration';
 import { colors, spacing, sizes } from '../../theme/tokens';
@@ -80,17 +81,14 @@ export function RegVerify({ navigation, route }) {
 
         {error && <HelperText type="error" visible style={styles.error}>{error}</HelperText>}
 
-        <Button
-          mode="contained"
+        <AppButton
+          title="Verify Email →"
           onPress={onVerify}
           loading={busy}
           disabled={busy || code.length !== 6}
-          style={styles.verifyBtn}
-          buttonColor={colors.teal}
-          textColor={colors.white}
-        >
-          Verify Email →
-        </Button>
+          variant="primary"
+          style={{ alignSelf: 'stretch', marginTop: spacing.xl }}
+        />
 
         <View style={styles.resendRow}>
           {resendIn > 0 ? (

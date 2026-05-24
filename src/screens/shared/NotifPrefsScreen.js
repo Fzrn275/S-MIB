@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { Toggle } from '../../components/Toggle';
 import { useAuth } from '../../context/AuthContext';
@@ -49,7 +50,7 @@ export function NotifPrefsScreen({ navigation }) {
     <ScreenBackground>
       <AppHeader paddingBottom={spacing.md}>
         <View style={styles.titleRow}>
-          <Pressable onPress={() => navigation.goBack()} hitSlop={10}><Text style={styles.back}>←</Text></Pressable>
+          <BackButton onPress={() => navigation.goBack()} />
           <Text style={styles.headerTitle}>Notifications</Text>
         </View>
       </AppHeader>

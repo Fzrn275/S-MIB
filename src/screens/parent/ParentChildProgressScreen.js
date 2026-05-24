@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { ChildHeader } from '../../components/ChildHeader';
 import { GoalCard } from '../../components/GoalCard';
@@ -50,7 +51,7 @@ export function ParentChildProgressScreen({ navigation, route }) {
     <ScreenBackground>
       <AppHeader paddingBottom={spacing.md}>
         <View style={styles.titleRow}>
-          <Pressable onPress={() => navigation.goBack()} hitSlop={10}><Text style={styles.back}>←</Text></Pressable>
+          <BackButton onPress={() => navigation.goBack()} />
           <Text style={styles.headerTitle} numberOfLines={1}>{child.name}</Text>
         </View>
       </AppHeader>

@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput, Button, HelperText } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { ForgotPasswordModal } from '../../components/ForgotPasswordModal';
+import { AppButton } from '../../components/AppButton';
 import { colors, spacing, sizes } from '../../theme/tokens';
 import { useAuth } from '../../context/AuthContext';
 import { SeniorLearner, JuniorLearner, VerifiedCreator, Parent } from '../../models';
@@ -123,17 +124,14 @@ export function LoginScreen({ navigation }) {
                 Forgot password?
               </Text>
 
-              <Button
-                mode="contained"
+              <AppButton
+                title="Sign in"
                 onPress={onSignIn}
                 loading={busy}
                 disabled={busy || !configured}
-                style={styles.signInBtn}
-                buttonColor={colors.teal}
-                textColor={colors.white}
-              >
-                Sign in
-              </Button>
+                variant="primary"
+                style={{ marginTop: spacing.md }}
+              />
 
               <Button
                 mode="outlined"

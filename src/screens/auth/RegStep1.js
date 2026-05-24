@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { Button } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { AppButton } from '../../components/AppButton';
 import { AuthHeader } from '../../components/AuthHeader';
 import { roleMeta } from '../../auth/registration';
 import { colors, spacing, sizes, radii } from '../../theme/tokens';
@@ -59,16 +59,13 @@ export function RegStep1({ navigation }) {
           </Text>
         </View>
 
-        <Button
-          mode="contained"
+        <AppButton
+          title="Continue →"
           onPress={() => navigation.navigate('RegStep2', { role: selected })}
           disabled={!selected}
-          style={styles.continueBtn}
-          buttonColor={colors.teal}
-          textColor={colors.white}
-        >
-          Continue →
-        </Button>
+          variant="primary"
+          style={{ marginTop: spacing.sm }}
+        />
       </ScrollView>
     </ScreenBackground>
   );

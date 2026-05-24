@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { Portal, Modal, Button } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { SettingsRow } from '../../components/SettingsRow';
 import { useAuth } from '../../context/AuthContext';
@@ -37,7 +38,7 @@ export function SettingsScreen({ navigation }) {
     <ScreenBackground>
       <AppHeader paddingBottom={spacing.md}>
         <View style={styles.titleRow}>
-          <Pressable onPress={() => navigation.goBack()} hitSlop={10}><Text style={styles.back}>←</Text></Pressable>
+          <BackButton onPress={() => navigation.goBack()} />
           <Text style={styles.headerTitle}>Settings</Text>
         </View>
       </AppHeader>

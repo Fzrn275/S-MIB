@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable, KeyboardAvoidingView, Pl
 import { TextInput, Button, HelperText, Menu } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { AuthHeader } from '../../components/AuthHeader';
+import { AppButton } from '../../components/AppButton';
 import { useAuth } from '../../context/AuthContext';
 import { resolveRole, roleMeta } from '../../auth/registration';
 import { colors, spacing, sizes, radii } from '../../theme/tokens';
@@ -182,17 +183,14 @@ export function RegStep2({ navigation, route }) {
 
           {error && <HelperText type="error" visible>{error}</HelperText>}
 
-          <Button
-            mode="contained"
+          <AppButton
+            title="Create Account →"
             onPress={onSubmit}
             loading={busy}
             disabled={busy}
-            style={styles.submit}
-            buttonColor={colors.teal}
-            textColor={colors.white}
-          >
-            Create Account →
-          </Button>
+            variant="primary"
+            style={{ marginTop: spacing.lg }}
+          />
           <Button mode="text" onPress={() => navigation.goBack()} textColor={colors.textMuted}>
             ← Back
           </Button>

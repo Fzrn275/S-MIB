@@ -2,8 +2,9 @@ import React, { useCallback, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
-import { Button } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { AppButton } from '../../components/AppButton';
+import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { SectionHeader } from '../../components/SectionHeader';
 import { useAuth } from '../../context/AuthContext';
@@ -63,7 +64,7 @@ export function StepDetailScreen({ navigation, route }) {
     <ScreenBackground>
       <AppHeader paddingBottom={spacing.md}>
         <View style={styles.headRow}>
-          <Pressable onPress={() => navigation.goBack()} hitSlop={10}><Text style={styles.back}>←</Text></Pressable>
+          <BackButton onPress={() => navigation.goBack()} />
           <View style={{ flex: 1 }}>
             <Text style={styles.crumb}>Step {step.n} of {totalSteps} · {project.title}</Text>
             <Text style={styles.stepTitle}>{step.title}</Text>
@@ -115,9 +116,7 @@ export function StepDetailScreen({ navigation, route }) {
         </View>
 
         <View style={styles.cta}>
-          <Button mode="contained" buttonColor={colors.yellow} textColor={colors.navy} loading={saving} onPress={markDone}>
-            ✅ Mark Step Done · +{step.xp} XP
-          </Button>
+          <AppButton title={`✅ Mark Step Done · +${step.xp} XP`} variant="yellow" loading={saving} onPress={markDone} />
         </View>
       </ScrollView>
 
@@ -127,9 +126,7 @@ export function StepDetailScreen({ navigation, route }) {
           <Text style={styles.amount}>+{overlay.xp} XP</Text>
           <Text style={styles.big}>Step Complete!</Text>
           <Text style={styles.small}>{overlay.done} of {overlay.total} steps done</Text>
-          <Button mode="contained" buttonColor={colors.yellow} textColor={colors.navy} style={{ marginTop: 20 }} onPress={() => { setOverlay(null); navigation.navigate('ProjectDetail', { projectId }); }}>
-            Back to Project
-          </Button>
+          <AppButton title="Back to Project" variant="yellow" style={{ marginTop: 20 }} onPress={() => { setOverlay(null); navigation.navigate('ProjectDetail', { projectId }); }} />
         </View>
       ) : null}
     </ScreenBackground>

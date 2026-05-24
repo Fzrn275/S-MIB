@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { Portal, Modal, Button } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { NotifRow } from '../../components/NotifRow';
 import { SEED_PARENT_NOTIFS, SEED_CHILDREN } from '../../data/seedData';
@@ -29,7 +30,7 @@ export function ParentNotificationsScreen({ navigation }) {
       <AppHeader paddingBottom={spacing.md}>
         <View style={styles.headerRow}>
           <View style={styles.left}>
-            <Pressable onPress={() => navigation.goBack()} hitSlop={10}><Text style={styles.back}>←</Text></Pressable>
+            <BackButton onPress={() => navigation.goBack()} />
             <Text style={styles.headerTitle}>Notifications</Text>
           </View>
           <Pressable onPress={markAll} hitSlop={8}><Text style={styles.markAll}>Mark all read</Text></Pressable>

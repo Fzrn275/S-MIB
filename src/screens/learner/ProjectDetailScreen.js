@@ -3,8 +3,9 @@ import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
-import { Button } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { AppButton } from '../../components/AppButton';
+import { BackButton } from '../../components/BackRow';
 import { SectionHeader } from '../../components/SectionHeader';
 import { StepRow } from '../../components/StepRow';
 import { useAuth } from '../../context/AuthContext';
@@ -55,7 +56,7 @@ export function ProjectDetailScreen({ navigation, route }) {
         <LinearGradient colors={thumbGradient(project.color)} style={styles.hero}>
           <SafeAreaView edges={['top']}>
             <View style={styles.heroBar}>
-              <Pressable onPress={() => navigation.goBack()} hitSlop={10}><Text style={styles.heroIcon}>←</Text></Pressable>
+              <BackButton onPress={() => navigation.goBack()} />
             </View>
           </SafeAreaView>
           <Text style={styles.heroEmoji}>{project.emoji}</Text>
@@ -102,14 +103,11 @@ export function ProjectDetailScreen({ navigation, route }) {
         ))}
 
         <View style={styles.cta}>
-          <Button
-            mode="contained"
-            buttonColor={enrolled ? colors.teal : colors.yellow}
-            textColor={enrolled ? colors.white : colors.navy}
+          <AppButton
+            title={enrolled ? `Continue Step ${nextStep ? nextStep.n : totalSteps}` : 'Enrol & Start Project'}
+            variant={enrolled ? 'primary' : 'yellow'}
             onPress={() => goStep(nextStep ? nextStep.n : 1)}
-          >
-            {enrolled ? `Continue Step ${nextStep ? nextStep.n : totalSteps}` : 'Enrol & Start Project'}
-          </Button>
+          />
         </View>
       </ScrollView>
     </ScreenBackground>
