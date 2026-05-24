@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: radii.md, paddingVertical: spacing.md, paddingHorizontal: spacing.lg, marginBottom: spacing.lg,
   },
   idLabel: { color: colors.textDim, fontSize: 10, letterSpacing: 1, fontWeight: '700' },
-  idValue: { fontFamily: 'monospace', fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', letterSpacing: 2, marginTop: 4 },
+  idValue: { fontFamily: 'monospace', fontSize: sizes.textXl, fontWeight: '900', letterSpacing: 2, marginTop: 4 },
   idHint: { color: colors.textDim, fontSize: 10, marginTop: 4, textAlign: 'center' },
   perks: { alignSelf: 'stretch', gap: spacing.md, marginBottom: spacing.xl },
   perkRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
