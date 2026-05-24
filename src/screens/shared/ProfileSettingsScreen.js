@@ -8,7 +8,7 @@ import { FormTextField } from '../../components/FormTextField';
 import { useAuth } from '../../context/AuthContext';
 import { User } from '../../models';
 import { supabase, isSupabaseConfigured } from '../../services/supabase';
-import { colors, gradients, spacing, sizes, radii, initials } from '../../theme/tokens';
+import { colors, gradients, spacing, sizes, radii, initials, fonts } from '../../theme/tokens';
 
 /** Editable fields per role; `key` is the snake_case profiles column. */
 function fieldsForUser(user) {
@@ -111,11 +111,11 @@ export function ProfileSettingsScreen({ navigation }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900', flex: 1 },
+  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', flex: 1 },
   save: { color: colors.green, fontSize: sizes.textSm, fontWeight: '800' },
   avatarWrap: { alignItems: 'center', marginBottom: spacing.lg },
   avatar: { width: 96, height: 96, borderRadius: 48, alignItems: 'center', justifyContent: 'center' },
-  avatarText: { color: colors.navy, fontSize: sizes.text3xl, fontWeight: '900' },
+  avatarText: { color: colors.navy, fontSize: sizes.text3xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   changePhoto: { color: colors.cyan, fontSize: sizes.textXs, fontWeight: '800', marginTop: spacing.sm },
   idGroup: { paddingHorizontal: spacing.lg, marginTop: spacing.xs },
   idLabel: { color: colors.textMuted, fontSize: sizes.textXs, fontWeight: '700', marginBottom: 6 },

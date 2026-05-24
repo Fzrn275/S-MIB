@@ -7,7 +7,7 @@ import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { useAuth } from '../../context/AuthContext';
 import { parentRepo } from '../../repos';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, fonts } from '../../theme/tokens';
 
 const GUIDE = [
   "Open S-MIB on your child's phone",
@@ -123,10 +123,10 @@ export function ParentLinkChildScreen({ navigation }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900' },
+  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   intro: { alignItems: 'center', paddingHorizontal: spacing.xl, paddingBottom: spacing.sm },
   introIcon: { fontSize: 48, marginBottom: spacing.sm },
-  introTitle: { color: colors.white, fontSize: sizes.textLg, fontWeight: '900', marginBottom: 6 },
+  introTitle: { color: colors.white, fontSize: sizes.textLg, fontFamily: fonts.displayBlack, fontWeight: '900', marginBottom: 6 },
   introBody: { color: colors.textMuted, fontSize: sizes.textSm, textAlign: 'center', lineHeight: 20 },
   guide: { marginHorizontal: spacing.lg, marginVertical: spacing.md, padding: spacing.md, backgroundColor: 'rgba(14,116,144,0.08)', borderWidth: 1, borderColor: 'rgba(103,232,249,0.15)', borderRadius: radii.md },
   guideTitle: { color: colors.cyan, fontSize: sizes.textXs, fontWeight: '800', marginBottom: 6 },
@@ -145,12 +145,12 @@ const styles = StyleSheet.create({
   foundLabel: { color: colors.green, fontSize: sizes.textXs, fontWeight: '800', marginBottom: spacing.md },
   foundRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: spacing.lg },
   foundAvatar: { width: 52, height: 52, borderRadius: 26, alignItems: 'center', justifyContent: 'center' },
-  foundAvatarText: { color: colors.navy, fontSize: sizes.textLg, fontWeight: '900' },
-  foundName: { color: colors.white, fontSize: sizes.textMd, fontWeight: '900' },
+  foundAvatarText: { color: colors.navy, fontSize: sizes.textLg, fontFamily: fonts.displayBlack, fontWeight: '900' },
+  foundName: { color: colors.white, fontSize: sizes.textMd, fontFamily: fonts.displayBlack, fontWeight: '900' },
   foundMeta: { color: colors.textDim, fontSize: sizes.textXs, marginTop: 2 },
   foundLevel: { color: colors.textMuted, fontSize: sizes.textXs, marginTop: 4 },
   successCard: { marginHorizontal: spacing.lg, marginTop: spacing.lg, padding: spacing.lg, alignItems: 'center', backgroundColor: 'rgba(34,197,94,0.08)', borderWidth: 1, borderColor: 'rgba(34,197,94,0.2)', borderRadius: radii.lg },
   successIcon: { fontSize: 36, marginBottom: spacing.sm },
-  successTitle: { color: colors.green, fontSize: sizes.textMd, fontWeight: '900' },
+  successTitle: { color: colors.green, fontSize: sizes.textMd, fontFamily: fonts.displayBlack, fontWeight: '900' },
   successSub: { color: colors.textDim, fontSize: sizes.textXs, marginTop: 4 },
 });

@@ -7,7 +7,7 @@ import { AppHeader } from '../../components/AppHeader';
 import { useAuth } from '../../context/AuthContext';
 import { localStore, keys } from '../../data/localStore';
 import { supabase, isSupabaseConfigured } from '../../services/supabase';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, fonts } from '../../theme/tokens';
 
 const LANGS = [
   { code: 'EN', locale: 'en', label: 'English', sub: 'Default app language', bg: 'rgba(103,232,249,0.15)', border: 'rgba(103,232,249,0.3)', fg: colors.cyan },
@@ -68,15 +68,15 @@ export function LanguageScreen({ navigation }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900' },
+  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   intro: { color: colors.textMuted, fontSize: sizes.textSm, lineHeight: 20, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.xs },
   row: { flexDirection: 'row', alignItems: 'center', gap: 14, marginHorizontal: spacing.lg, marginTop: spacing.sm, padding: spacing.md, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.lg },
   rowSel: { backgroundColor: 'rgba(103,232,249,0.1)', borderColor: 'rgba(103,232,249,0.4)' },
   badge: { width: 40, height: 40, borderRadius: radii.md, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  badgeText: { fontSize: sizes.textSm, fontWeight: '900' },
-  label: { color: colors.white, fontSize: sizes.textMd, fontWeight: '900' },
+  badgeText: { fontSize: sizes.textSm, fontFamily: fonts.displayBlack, fontWeight: '900' },
+  label: { color: colors.white, fontSize: sizes.textMd, fontFamily: fonts.displayBlack, fontWeight: '900' },
   sub: { color: colors.textDim, fontSize: sizes.textXs, marginTop: 2 },
   check: { width: 22, height: 22, borderRadius: 11, backgroundColor: colors.teal, alignItems: 'center', justifyContent: 'center' },
-  checkText: { color: colors.white, fontSize: sizes.textXs, fontWeight: '900' },
+  checkText: { color: colors.white, fontSize: sizes.textXs, fontFamily: fonts.displayBlack, fontWeight: '900' },
   note: { color: colors.textDim, fontSize: sizes.textXs, lineHeight: 18, paddingHorizontal: spacing.lg, paddingTop: spacing.md },
 });

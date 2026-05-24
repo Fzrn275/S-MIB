@@ -11,7 +11,7 @@ import { StepEditorSheet } from '../../components/StepEditorSheet';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
 import { authoringService } from '../../services/authoringService';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, fonts } from '../../theme/tokens';
 
 const CATS = ['Electronics', 'Agriculture', 'Renewable Energy', 'Coding', 'Biology', 'Physics'];
 const DIFFS = ['Easy', 'Medium', 'Hard'];
@@ -111,13 +111,13 @@ export function CreatorEditProjectScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  title: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   warn: { marginHorizontal: spacing.lg, marginBottom: spacing.md, padding: spacing.md, backgroundColor: 'rgba(245,158,11,0.12)', borderWidth: 1, borderColor: 'rgba(245,158,11,0.3)', borderRadius: radii.md },
   warnText: { color: colors.yellow, fontSize: sizes.textXs, lineHeight: 18 },
   stepsHead: { paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.sm },
-  stepsTitle: { color: colors.white, fontSize: sizes.textMd, fontWeight: '900' },
+  stepsTitle: { color: colors.white, fontSize: sizes.textMd, fontFamily: fonts.displayBlack, fontWeight: '900' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 10, marginHorizontal: spacing.lg, marginBottom: 6, padding: 12, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.md },
-  num: { color: colors.cyan, fontWeight: '900', width: 20 },
+  num: { color: colors.cyan, fontFamily: fonts.displayBlack, fontWeight: '900', width: 20 },
   stepTitle: { color: colors.white, fontSize: sizes.textSm, fontWeight: '700', flex: 1 },
   edit: { color: colors.cyan, fontSize: sizes.textXs, fontWeight: '800' },
   del: { fontSize: sizes.textSm },

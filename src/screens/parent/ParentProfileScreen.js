@@ -10,7 +10,7 @@ import { SettingsRow } from '../../components/SettingsRow';
 import { useAuth } from '../../context/AuthContext';
 import { parentRepo } from '../../repos';
 import { aggregate } from '../../data/parentStats';
-import { colors, gradients, spacing, sizes, radii, initials, tabBarClearance } from '../../theme/tokens';
+import { colors, gradients, spacing, sizes, radii, initials, tabBarClearance, fonts } from '../../theme/tokens';
 
 export function ParentProfileScreen({ navigation }) {
   const { user, signOut } = useAuth();
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
   gear: { fontSize: sizes.textXl },
   card: { alignItems: 'center', marginHorizontal: spacing.lg, marginTop: -spacing.xl + 4, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.lg, padding: spacing.lg },
   avatar: { width: 72, height: 72, borderRadius: 36, alignItems: 'center', justifyContent: 'center', marginBottom: spacing.sm },
-  avatarText: { color: colors.navy, fontSize: sizes.text2xl, fontWeight: '900' },
-  name: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900' },
+  avatarText: { color: colors.navy, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
+  name: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   role: { color: colors.textMuted, fontSize: sizes.textXs, marginTop: 2 },
   pill: { marginTop: spacing.sm, backgroundColor: 'rgba(34,197,94,0.15)', borderWidth: 1, borderColor: 'rgba(34,197,94,0.3)', borderRadius: radii.pill, paddingHorizontal: 12, paddingVertical: 4 },
   pillText: { color: '#86EFAC', fontSize: sizes.textXs, fontWeight: '700' },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   sheet: { backgroundColor: colors.navyLight, marginHorizontal: spacing.lg, borderRadius: radii.lg, borderWidth: 1, borderColor: colors.border, padding: spacing.lg, alignItems: 'center' },
   handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: colors.border, marginBottom: spacing.md },
   modalIcon: { fontSize: 40, marginBottom: spacing.sm },
-  modalTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900', marginBottom: spacing.xs },
+  modalTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', marginBottom: spacing.xs },
   modalBody: { color: colors.textMuted, fontSize: sizes.textSm, textAlign: 'center', lineHeight: 20, marginBottom: spacing.lg },
   modalBtns: { flexDirection: 'row', width: '100%' },
 });

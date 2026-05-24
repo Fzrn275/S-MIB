@@ -9,7 +9,7 @@ import { AnalyticsBars } from '../../components/AnalyticsBars';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
 import { buildAnalytics } from '../../data/creatorStats';
-import { colors, spacing, sizes, tabBarClearance } from '../../theme/tokens';
+import { colors, spacing, sizes, tabBarClearance, fonts } from '../../theme/tokens';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Today'];
 
@@ -66,7 +66,7 @@ export function CreatorAnalyticsScreen() {
 }
 
 const styles = StyleSheet.create({
-  title: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   sub: { color: colors.textMuted, fontSize: sizes.textXs, marginTop: 2 },
   stats: { flexDirection: 'row', paddingHorizontal: spacing.lg, marginBottom: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginHorizontal: spacing.lg, marginBottom: 6, padding: 12, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: 12 },

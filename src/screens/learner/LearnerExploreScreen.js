@@ -7,7 +7,7 @@ import { ProjectListCard } from '../../components/ProjectListCard';
 import { useAuth } from '../../context/AuthContext';
 import { projectRepo, progressRepo } from '../../repos';
 import { buildCard } from '../../data/learnerView';
-import { colors, spacing, sizes, radii, tabBarClearance } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, tabBarClearance, fonts } from '../../theme/tokens';
 
 const CATS = ['All', 'Electronics', 'Agriculture', 'Coding', 'Renewable', 'Biology', 'Physics'];
 const SORTS = [['newest', '🆕 Newest'], ['popular', '🔥 Popular'], ['rating', '⭐ Top Rated']];
@@ -96,7 +96,7 @@ export function LearnerExploreScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  title: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   sub: { color: colors.textDim, fontSize: sizes.textXs, marginTop: 2 },
   searchWrap: { flexDirection: 'row', alignItems: 'center', marginHorizontal: spacing.lg, marginTop: spacing.md, paddingHorizontal: spacing.md, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.md },
   searchIcon: { fontSize: 15, marginRight: 8 },

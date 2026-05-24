@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
-import { colors, spacing, sizes } from '../../theme/tokens';
+import { colors, spacing, sizes, fonts } from '../../theme/tokens';
 
 /**
  * Generic static info screen. Backs the legal/support stubs (Privacy & Security,
@@ -36,9 +36,9 @@ export function InfoScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900', flex: 1 },
+  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', flex: 1 },
   icon: { fontSize: 40, textAlign: 'center', marginBottom: spacing.md },
-  title: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900', textAlign: 'center' },
+  title: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', textAlign: 'center' },
   body: { color: colors.textMuted, fontSize: sizes.textSm, lineHeight: 21, textAlign: 'center', marginTop: spacing.md },
   placeholder: { marginTop: spacing.xl, padding: spacing.lg, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: 12 },
   placeholderText: { color: colors.textDim, fontSize: sizes.textXs, lineHeight: 19, textAlign: 'center' },

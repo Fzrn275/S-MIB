@@ -7,7 +7,7 @@ import { AppHeader } from '../../components/AppHeader';
 import { Toggle } from '../../components/Toggle';
 import { useAuth } from '../../context/AuthContext';
 import { localStore, keys } from '../../data/localStore';
-import { colors, spacing, sizes } from '../../theme/tokens';
+import { colors, spacing, sizes, fonts } from '../../theme/tokens';
 
 const DEFAULTS = { push: true, email: false, xp: true, badges: true, streak: true, leaderboard: false, newProjects: true, weeklyDigest: false };
 
@@ -79,9 +79,9 @@ export function NotifPrefsScreen({ navigation }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900' },
+  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   intro: { color: colors.textMuted, fontSize: sizes.textSm, lineHeight: 20, paddingHorizontal: spacing.lg, paddingTop: spacing.md },
-  groupLabel: { color: colors.textDim, fontSize: sizes.textXs, fontWeight: '900', textTransform: 'uppercase', letterSpacing: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.sm },
+  groupLabel: { color: colors.textDim, fontSize: sizes.textXs, fontFamily: fonts.displayBlack, fontWeight: '900', textTransform: 'uppercase', letterSpacing: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, marginHorizontal: spacing.lg, marginBottom: 6, padding: spacing.md, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: 12 },
   label: { color: colors.white, fontSize: sizes.textSm, fontWeight: '700' },
   sub: { color: colors.textDim, fontSize: sizes.textXs, marginTop: 1 },

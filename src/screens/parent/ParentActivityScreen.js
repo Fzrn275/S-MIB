@@ -5,7 +5,7 @@ import { AppHeader } from '../../components/AppHeader';
 import { ActivityRow } from '../../components/ActivityRow';
 import { SEED_PARENT_ACTIVITY } from '../../data/seedData';
 import { childTabs, filterAndGroup } from '../../data/parentActivity';
-import { colors, spacing, sizes, radii, tabBarClearance } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, tabBarClearance, fonts } from '../../theme/tokens';
 
 export function ParentActivityScreen() {
   const [filter, setFilter] = useState('All');
@@ -46,7 +46,7 @@ export function ParentActivityScreen() {
 
 const styles = StyleSheet.create({
   headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  title: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   sub: { color: colors.textDim, fontSize: sizes.textXs, marginTop: 2 },
   markAll: { color: colors.green, fontSize: sizes.textXs, fontWeight: '700' },
   tabs: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, paddingHorizontal: spacing.lg, paddingTop: spacing.md },

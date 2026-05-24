@@ -8,7 +8,7 @@ import { ProjectListCard } from '../../components/ProjectListCard';
 import { useAuth } from '../../context/AuthContext';
 import { projectRepo, progressRepo } from '../../repos';
 import { buildCard } from '../../data/learnerView';
-import { colors, spacing, sizes } from '../../theme/tokens';
+import { colors, spacing, sizes, fonts } from '../../theme/tokens';
 
 const TABS = [
   { label: 'In Progress', icon: '⚡' },
@@ -85,13 +85,13 @@ export function MyProjectsScreen({ navigation }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  title: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   tabs: { flexDirection: 'row', paddingHorizontal: spacing.lg, paddingVertical: spacing.md, gap: 8 },
   tab: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border },
   tabActive: { backgroundColor: colors.teal, borderColor: colors.cyan },
   tabText: { color: colors.textMuted, fontSize: sizes.textXs, fontWeight: '800' },
   tabTextActive: { color: colors.white },
-  tabCount: { color: colors.cyan, fontSize: sizes.textXs, fontWeight: '900' },
+  tabCount: { color: colors.cyan, fontSize: sizes.textXs, fontFamily: fonts.displayBlack, fontWeight: '900' },
   empty: { alignItems: 'center', padding: spacing.xxl },
   emptyIcon: { fontSize: 48, opacity: 0.5, marginBottom: spacing.sm },
   emptyTitle: { color: colors.textMuted, fontSize: sizes.textMd, fontWeight: '800' },

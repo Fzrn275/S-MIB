@@ -5,7 +5,7 @@ import { Button } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { useAuth } from '../../context/AuthContext';
 import { roleMeta, buildUserModel } from '../../auth/registration';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, fonts } from '../../theme/tokens';
 
 export function RegSuccess({ route }) {
   const { role = 'learner', resolvedRole, email, profile, publicId } = route?.params || {};
@@ -93,20 +93,20 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: { paddingHorizontal: spacing.lg, paddingVertical: spacing.xl, alignItems: 'center' },
   eagle: { fontSize: 56, marginBottom: spacing.sm },
-  title: { color: colors.white, fontSize: sizes.text3xl, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.text3xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   greeting: { color: colors.textMuted, fontSize: sizes.textSm, textAlign: 'center', lineHeight: 20, marginTop: spacing.sm, marginBottom: spacing.lg },
   badgeRow: { flexDirection: 'row', gap: spacing.sm, flexWrap: 'wrap', justifyContent: 'center', marginBottom: spacing.md },
   roleBadge: { backgroundColor: 'rgba(245,158,11,0.2)', borderWidth: 1, borderColor: 'rgba(245,158,11,0.3)', borderRadius: radii.pill, paddingVertical: 4, paddingHorizontal: spacing.md },
-  roleBadgeText: { color: colors.yellow, fontSize: sizes.textSm, fontWeight: '900' },
+  roleBadgeText: { color: colors.yellow, fontSize: sizes.textSm, fontFamily: fonts.displayBlack, fontWeight: '900' },
   levelBadge: { backgroundColor: 'rgba(14,116,144,0.2)', borderWidth: 1, borderColor: 'rgba(103,232,249,0.3)', borderRadius: radii.pill, paddingVertical: 4, paddingHorizontal: spacing.md },
-  levelBadgeText: { color: colors.cyan, fontSize: sizes.textSm, fontWeight: '900' },
+  levelBadgeText: { color: colors.cyan, fontSize: sizes.textSm, fontFamily: fonts.displayBlack, fontWeight: '900' },
   idCard: {
     alignSelf: 'stretch', alignItems: 'center',
     backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border,
     borderRadius: radii.md, paddingVertical: spacing.md, paddingHorizontal: spacing.lg, marginBottom: spacing.lg,
   },
   idLabel: { color: colors.textDim, fontSize: 10, letterSpacing: 1, fontWeight: '700' },
-  idValue: { fontFamily: 'monospace', fontSize: sizes.textXl, fontWeight: '900', letterSpacing: 2, marginTop: 4 },
+  idValue: { fontFamily: 'monospace', fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', letterSpacing: 2, marginTop: 4 },
   idHint: { color: colors.textDim, fontSize: 10, marginTop: 4, textAlign: 'center' },
   perks: { alignSelf: 'stretch', gap: spacing.md, marginBottom: spacing.xl },
   perkRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },

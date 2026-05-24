@@ -10,7 +10,7 @@ import { CreatorProjectCard } from '../../components/CreatorProjectCard';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
 import { buildAnalytics } from '../../data/creatorStats';
-import { colors, spacing, sizes, tabBarClearance } from '../../theme/tokens';
+import { colors, spacing, sizes, tabBarClearance, fonts } from '../../theme/tokens';
 
 export function CreatorDashboardScreen({ navigation }) {
   const { user } = useAuth();
@@ -66,7 +66,7 @@ export function CreatorDashboardScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   eyebrow: { color: colors.cyan, fontSize: sizes.textXs, fontWeight: '800', letterSpacing: 2 },
-  name: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900', marginTop: 4 },
+  name: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900', marginTop: 4 },
   sub: { color: colors.textMuted, fontSize: sizes.textSm, marginTop: 2 },
   stats: { flexDirection: 'row', paddingHorizontal: spacing.lg, marginTop: -spacing.xl + 4 },
   cta: { paddingHorizontal: spacing.lg, marginTop: spacing.lg },

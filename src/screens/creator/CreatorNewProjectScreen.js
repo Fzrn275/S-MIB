@@ -8,7 +8,7 @@ import { FormTextField } from '../../components/FormTextField';
 import { FormSelectField } from '../../components/FormSelectField';
 import { useAuth } from '../../context/AuthContext';
 import { authoringService } from '../../services/authoringService';
-import { colors, spacing, sizes } from '../../theme/tokens';
+import { colors, spacing, sizes, fonts } from '../../theme/tokens';
 
 const CATS = ['Electronics', 'Agriculture', 'Renewable Energy', 'Coding', 'Biology', 'Physics'];
 const DIFFS = ['Easy', 'Medium', 'Hard'];
@@ -61,7 +61,7 @@ export function CreatorNewProjectScreen({ navigation }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  title: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   hint: { color: colors.textDim, fontSize: sizes.textXs, paddingHorizontal: spacing.lg, marginBottom: spacing.sm },
   cover: { marginHorizontal: spacing.lg, alignItems: 'center', borderWidth: 1, borderStyle: 'dashed', borderColor: colors.border, borderRadius: 12, padding: spacing.xl, backgroundColor: colors.glass },
   coverIcon: { fontSize: 28 },

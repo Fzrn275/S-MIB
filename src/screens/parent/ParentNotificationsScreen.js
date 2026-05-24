@@ -6,7 +6,7 @@ import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { NotifRow } from '../../components/NotifRow';
 import { SEED_PARENT_NOTIFS, SEED_CHILDREN } from '../../data/seedData';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, fonts } from '../../theme/tokens';
 
 const PROGRESS_TYPES = new Set(['step', 'complete', 'enrol', 'badge', 'cert', 'goal', 'streak']);
 
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   left: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900' },
+  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   markAll: { color: colors.cyan, fontSize: sizes.textXs, fontWeight: '700' },
   dateLabel: { color: colors.textDim, fontSize: sizes.textXs, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.sm },
   sheet: { backgroundColor: colors.navyLight, marginHorizontal: spacing.lg, borderRadius: radii.lg, borderWidth: 1, borderColor: colors.border, padding: spacing.lg },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   modalHead: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, marginBottom: spacing.md },
   modalIconWrap: { width: 48, height: 48, borderRadius: radii.md, alignItems: 'center', justifyContent: 'center' },
   modalIcon: { fontSize: 22 },
-  modalTitle: { color: colors.white, fontSize: sizes.textLg, fontWeight: '900' },
+  modalTitle: { color: colors.white, fontSize: sizes.textLg, fontFamily: fonts.displayBlack, fontWeight: '900' },
   modalTime: { color: colors.textDim, fontSize: sizes.textXs, marginTop: 2 },
   modalBody: { color: colors.textMuted, fontSize: sizes.textSm, lineHeight: 21, backgroundColor: colors.glass, borderRadius: radii.md, padding: spacing.md, marginBottom: spacing.md },
 });

@@ -12,7 +12,7 @@ import { StatCard } from '../../components/StatCard';
 import { CreatorPublicProfileModal } from '../../components/CreatorPublicProfileModal';
 import { projectRepo } from '../../repos';
 import { SEED_BADGES } from '../../data/seedData';
-import { colors, spacing, sizes, radii, thumbGradient } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, thumbGradient, fonts } from '../../theme/tokens';
 
 /** Build plain read-only project views for a child from the published catalog. */
 function deriveChildProjects(projects, child) {
@@ -131,14 +131,14 @@ export function ParentChildProgressScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900', flex: 1 },
+  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', flex: 1 },
   stats: { flexDirection: 'row', paddingHorizontal: spacing.lg },
   note: { color: colors.textDim, fontSize: 11, paddingHorizontal: spacing.lg, paddingBottom: spacing.sm },
   projCard: { marginHorizontal: spacing.lg, marginBottom: spacing.sm, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.lg, overflow: 'hidden' },
   projRow: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: spacing.md },
   thumb: { width: 44, height: 44, borderRadius: radii.md, alignItems: 'center', justifyContent: 'center' },
   thumbEmoji: { fontSize: 22 },
-  projTitle: { color: colors.white, fontSize: sizes.textSm, fontWeight: '900' },
+  projTitle: { color: colors.white, fontSize: sizes.textSm, fontFamily: fonts.displayBlack, fontWeight: '900' },
   progRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 4 },
   track: { flex: 1, height: 6, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.1)', overflow: 'hidden' },
   fill: { height: 6, borderRadius: 3, backgroundColor: colors.teal },
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   doneBadge: { fontSize: 9, fontWeight: '700', color: '#86EFAC', backgroundColor: 'rgba(22,101,52,0.4)', paddingHorizontal: 7, paddingVertical: 2, borderRadius: radii.pill, overflow: 'hidden' },
   badges: { paddingHorizontal: spacing.lg, gap: 8, paddingBottom: spacing.sm },
   badgeCard: { width: 84, alignItems: 'center', backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.md, padding: spacing.sm },
-  badgeTier: { color: colors.textDim, fontSize: 8, fontWeight: '900', textTransform: 'uppercase' },
+  badgeTier: { color: colors.textDim, fontSize: 8, fontFamily: fonts.displayBlack, fontWeight: '900', textTransform: 'uppercase' },
   badgeIcon: { fontSize: 22, marginVertical: 4 },
   badgeName: { color: colors.textMuted, fontSize: 10, fontWeight: '700', textAlign: 'center' },
 });

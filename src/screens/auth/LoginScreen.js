@@ -5,7 +5,7 @@ import { TextInput, Button, HelperText } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { ForgotPasswordModal } from '../../components/ForgotPasswordModal';
 import { AppButton } from '../../components/AppButton';
-import { colors, spacing, sizes } from '../../theme/tokens';
+import { colors, spacing, sizes, fonts } from '../../theme/tokens';
 import { useAuth } from '../../context/AuthContext';
 import { SeniorLearner, JuniorLearner, VerifiedCreator, Parent } from '../../models';
 
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   brand: {
     color: colors.white,
     fontSize: sizes.text4xl,
-    fontWeight: '900',
+    fontFamily: fonts.displayBlack, fontWeight: '900',
     letterSpacing: 2,
     textAlign: 'center',
   },

@@ -9,7 +9,7 @@ import { SettingsRow } from '../../components/SettingsRow';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
 import { buildAnalytics } from '../../data/creatorStats';
-import { colors, spacing, sizes, radii, avatarColor, initials, tabBarClearance } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, avatarColor, initials, tabBarClearance, fonts } from '../../theme/tokens';
 
 export function CreatorProfileScreen({ navigation }) {
   const { user, signOut } = useAuth();
@@ -70,11 +70,11 @@ export function CreatorProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   gear: { fontSize: sizes.textXl },
-  title: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   card: { alignItems: 'center', marginHorizontal: spacing.lg, marginTop: -spacing.xl + 4, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.lg, padding: spacing.lg },
   avatar: { width: 64, height: 64, borderRadius: 32, alignItems: 'center', justifyContent: 'center', marginBottom: spacing.sm },
-  avatarText: { color: colors.navy, fontSize: sizes.textXl, fontWeight: '900' },
-  name: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900' },
+  avatarText: { color: colors.navy, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900' },
+  name: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   role: { color: colors.cyan, fontSize: sizes.textXs, fontWeight: '700', marginTop: 2 },
   meta: { color: colors.textMuted, fontSize: sizes.textSm, marginTop: 6 },
   bio: { color: colors.textMuted, fontSize: sizes.textSm, marginTop: spacing.sm, textAlign: 'center', lineHeight: 19 },

@@ -11,7 +11,7 @@ import { StepRow } from '../../components/StepRow';
 import { useAuth } from '../../context/AuthContext';
 import { projectRepo, progressRepo } from '../../repos';
 import { Progress } from '../../models';
-import { colors, spacing, sizes, radii, thumbGradient } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, thumbGradient, fonts } from '../../theme/tokens';
 
 export function ProjectDetailScreen({ navigation, route }) {
   const { projectId } = route.params;
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   heroEmoji: { fontSize: 72, textAlign: 'center', opacity: 0.85 },
   heroFooter: { padding: spacing.lg },
   heroCat: { color: colors.white, fontSize: sizes.textXs, fontWeight: '800', opacity: 0.85, marginBottom: 4 },
-  heroTitle: { color: colors.white, fontSize: sizes.text3xl, fontWeight: '900' },
+  heroTitle: { color: colors.white, fontSize: sizes.text3xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   creditRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: spacing.lg, paddingTop: spacing.md },
   creditBy: { color: colors.textMuted, fontSize: sizes.textSm },
   creditName: { color: colors.cyan, fontWeight: '800' },
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   pills: { flexDirection: 'row', gap: 8, paddingHorizontal: spacing.lg, paddingTop: spacing.md },
   pill: { flex: 1, alignItems: 'center', backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.md, paddingVertical: spacing.sm },
   pillIcon: { fontSize: sizes.textLg, marginBottom: 3 },
-  pillVal: { color: colors.white, fontSize: sizes.textSm, fontWeight: '900' },
+  pillVal: { color: colors.white, fontSize: sizes.textSm, fontFamily: fonts.displayBlack, fontWeight: '900' },
   pillKey: { color: colors.textDim, fontSize: 9, textTransform: 'uppercase', letterSpacing: 0.5, marginTop: 2 },
   cta: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg },
 });

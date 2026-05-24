@@ -11,7 +11,7 @@ import { useAuth } from '../../context/AuthContext';
 import { projectRepo, progressRepo } from '../../repos';
 import { progressService } from '../../services/progressService';
 import { Progress } from '../../models';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, fonts } from '../../theme/tokens';
 
 export function StepDetailScreen({ navigation, route }) {
   const { projectId, stepN } = route.params;
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   headRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
   crumb: { color: colors.cyan, fontSize: sizes.textXs, fontWeight: '800' },
-  stepTitle: { color: colors.white, fontSize: sizes.textLg, fontWeight: '900' },
+  stepTitle: { color: colors.white, fontSize: sizes.textLg, fontFamily: fonts.displayBlack, fontWeight: '900' },
   card: { margin: spacing.lg, marginBottom: spacing.md, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.md, padding: spacing.md },
   cardLabel: { color: colors.cyan, fontSize: sizes.textXs, fontWeight: '800', marginBottom: 6 },
   cardText: { color: colors.white, fontSize: sizes.textSm, lineHeight: 20 },
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   cta: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg },
   overlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(12,26,46,0.96)', alignItems: 'center', justifyContent: 'center', padding: spacing.xl },
   burst: { fontSize: 72 },
-  amount: { color: colors.yellow, fontSize: sizes.text4xl, fontWeight: '900', marginTop: spacing.sm },
-  big: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900', marginTop: 4 },
+  amount: { color: colors.yellow, fontSize: sizes.text4xl, fontFamily: fonts.displayBlack, fontWeight: '900', marginTop: spacing.sm },
+  big: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', marginTop: 4 },
   small: { color: colors.cyan, fontSize: sizes.textMd, fontWeight: '800', marginTop: 4 },
 });

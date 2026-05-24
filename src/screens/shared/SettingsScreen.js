@@ -6,7 +6,7 @@ import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { SettingsRow } from '../../components/SettingsRow';
 import { useAuth } from '../../context/AuthContext';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, fonts } from '../../theme/tokens';
 
 export function SettingsScreen({ navigation }) {
   const { signOut } = useAuth();
@@ -87,13 +87,13 @@ export function SettingsScreen({ navigation }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900' },
-  groupLabel: { color: colors.textDim, fontSize: sizes.textXs, fontWeight: '900', textTransform: 'uppercase', letterSpacing: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.sm },
+  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900' },
+  groupLabel: { color: colors.textDim, fontSize: sizes.textXs, fontFamily: fonts.displayBlack, fontWeight: '900', textTransform: 'uppercase', letterSpacing: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.sm },
   version: { textAlign: 'center', color: colors.textDim, fontSize: sizes.textXs, paddingTop: spacing.lg },
   sheet: { backgroundColor: colors.navyLight, marginHorizontal: spacing.lg, borderRadius: radii.lg, borderWidth: 1, borderColor: colors.border, padding: spacing.lg, alignItems: 'center' },
   handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: colors.border, marginBottom: spacing.md },
   modalIcon: { fontSize: 40, marginBottom: spacing.sm },
-  modalTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900', marginBottom: spacing.xs },
+  modalTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', marginBottom: spacing.xs },
   modalBody: { color: colors.textMuted, fontSize: sizes.textSm, textAlign: 'center', lineHeight: 20, marginBottom: spacing.lg },
   warnBox: { backgroundColor: 'rgba(239,68,68,0.1)', borderWidth: 1, borderColor: 'rgba(239,68,68,0.25)', borderRadius: radii.md, padding: spacing.md, marginBottom: spacing.lg },
   warnText: { color: '#FCA5A5', fontSize: sizes.textXs, lineHeight: 19 },

@@ -10,7 +10,7 @@ import { StatusBadge } from '../../components/StatusBadge';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
 import { authoringService } from '../../services/authoringService';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, fonts } from '../../theme/tokens';
 
 export function CreatorProjectDetailScreen({ navigation, route }) {
   const { projectId } = route.params;
@@ -86,16 +86,16 @@ export function CreatorProjectDetailScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  title: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900', flex: 1 },
+  title: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', flex: 1 },
   headerRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: spacing.lg, paddingTop: spacing.md },
   cat: { color: colors.textMuted, fontSize: sizes.textXs },
   pills: { flexDirection: 'row', gap: 8, paddingHorizontal: spacing.lg, paddingTop: spacing.md },
   pill: { flex: 1, alignItems: 'center', backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.md, paddingVertical: spacing.sm },
-  pillVal: { color: colors.white, fontSize: sizes.textMd, fontWeight: '900' },
+  pillVal: { color: colors.white, fontSize: sizes.textMd, fontFamily: fonts.displayBlack, fontWeight: '900' },
   pillKey: { color: colors.textDim, fontSize: 9, textTransform: 'uppercase', marginTop: 2 },
   desc: { paddingHorizontal: spacing.lg, paddingTop: spacing.md, color: colors.textMuted, fontSize: sizes.textSm, lineHeight: 20 },
   stepRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginHorizontal: spacing.lg, marginBottom: 6, padding: 12, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.md },
-  stepNum: { color: colors.cyan, fontWeight: '900', fontSize: sizes.textSm, width: 20 },
+  stepNum: { color: colors.cyan, fontFamily: fonts.displayBlack, fontWeight: '900', fontSize: sizes.textSm, width: 20 },
   stepTitle: { color: colors.white, fontSize: sizes.textSm, fontWeight: '700', flex: 1 },
   stepXp: { color: colors.yellow, fontSize: sizes.textXs, fontWeight: '800' },
   cta: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg },

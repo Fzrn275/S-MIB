@@ -7,7 +7,7 @@ import { AppHeader } from '../../components/AppHeader';
 import { CreatorProjectCard } from '../../components/CreatorProjectCard';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
-import { colors, spacing, sizes, tabBarClearance } from '../../theme/tokens';
+import { colors, spacing, sizes, tabBarClearance, fonts } from '../../theme/tokens';
 
 const TABS = [
   { label: 'All', match: () => true },
@@ -67,7 +67,7 @@ export function CreatorProjectsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  title: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   tabs: { flexDirection: 'row', paddingHorizontal: spacing.lg, paddingVertical: spacing.md, gap: 8 },
   tab: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: 999, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border },
   tabActive: { backgroundColor: colors.teal, borderColor: colors.cyan },

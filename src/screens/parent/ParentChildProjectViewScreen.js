@@ -6,7 +6,7 @@ import { ScreenBackground } from '../../components/ScreenBackground';
 import { BackButton } from '../../components/BackRow';
 import { AppHeader } from '../../components/AppHeader';
 import { projectRepo } from '../../repos';
-import { colors, spacing, sizes, radii, thumbGradient } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, thumbGradient, fonts } from '../../theme/tokens';
 
 export function ParentChildProjectViewScreen({ navigation, route }) {
   const { child, proj } = route.params;
@@ -78,13 +78,13 @@ export function ParentChildProjectViewScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   back: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '700' },
-  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontWeight: '900', flex: 1 },
+  headerTitle: { color: colors.white, fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900', flex: 1 },
   banner: { marginHorizontal: spacing.lg, marginTop: spacing.md, padding: spacing.md, backgroundColor: 'rgba(245,158,11,0.08)', borderWidth: 1, borderColor: 'rgba(245,158,11,0.2)', borderRadius: radii.md },
   bannerText: { color: colors.textMuted, fontSize: 11 },
   infoRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: spacing.lg, paddingTop: spacing.lg },
   thumb: { width: 56, height: 56, borderRadius: radii.lg, alignItems: 'center', justifyContent: 'center' },
   thumbEmoji: { fontSize: 28 },
-  title: { color: colors.white, fontSize: sizes.textLg, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.textLg, fontFamily: fonts.displayBlack, fontWeight: '900' },
   meta: { color: colors.textDim, fontSize: sizes.textXs, marginTop: 2 },
   desc: { color: colors.textMuted, fontSize: sizes.textSm, lineHeight: 20, paddingHorizontal: spacing.lg, paddingTop: spacing.md },
   progWrap: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg },
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   track: { height: 8, borderRadius: 4, backgroundColor: 'rgba(255,255,255,0.1)', overflow: 'hidden' },
   fill: { height: 8, borderRadius: 4, backgroundColor: colors.teal },
   progSub: { color: colors.textDim, fontSize: 11, marginTop: 6 },
-  overview: { color: colors.white, fontSize: sizes.textMd, fontWeight: '900', paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.sm },
+  overview: { color: colors.white, fontSize: sizes.textMd, fontFamily: fonts.displayBlack, fontWeight: '900', paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.sm },
   stepRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginHorizontal: spacing.lg, marginBottom: 6, padding: spacing.md, backgroundColor: 'rgba(255,255,255,0.03)', borderWidth: 1, borderColor: colors.border, borderRadius: radii.md },
   stepDone: { backgroundColor: 'rgba(22,101,52,0.08)', borderColor: 'rgba(34,197,94,0.15)' },
   stepActive: { backgroundColor: 'rgba(14,116,144,0.08)', borderColor: 'rgba(103,232,249,0.15)' },

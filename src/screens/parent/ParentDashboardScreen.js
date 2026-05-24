@@ -11,7 +11,7 @@ import { ChildCard } from '../../components/ChildCard';
 import { useAuth } from '../../context/AuthContext';
 import { parentRepo } from '../../repos';
 import { aggregate } from '../../data/parentStats';
-import { colors, gradients, spacing, sizes, radii, initials, tabBarClearance } from '../../theme/tokens';
+import { colors, gradients, spacing, sizes, radii, initials, tabBarClearance, fonts } from '../../theme/tokens';
 
 export function ParentDashboardScreen({ navigation }) {
   const { user } = useAuth();
@@ -83,15 +83,15 @@ export function ParentDashboardScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  logo: { color: colors.white, fontSize: sizes.textLg, fontWeight: '900' },
+  logo: { color: colors.white, fontSize: sizes.textLg, fontFamily: fonts.displayBlack, fontWeight: '900' },
   icons: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   bell: { width: 36, height: 36, borderRadius: 18, backgroundColor: colors.glass, alignItems: 'center', justifyContent: 'center' },
   bellIcon: { fontSize: 16 },
   bellDot: { position: 'absolute', top: 8, right: 9, width: 7, height: 7, borderRadius: 4, backgroundColor: colors.green },
   avatar: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
-  avatarText: { color: colors.navy, fontSize: sizes.textXs, fontWeight: '900' },
+  avatarText: { color: colors.navy, fontSize: sizes.textXs, fontFamily: fonts.displayBlack, fontWeight: '900' },
   greeting: { color: colors.textMuted, fontSize: sizes.textSm, marginTop: spacing.md },
-  name: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900', marginTop: 2 },
+  name: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900', marginTop: 2 },
   pill: { alignSelf: 'flex-start', flexDirection: 'row', marginTop: spacing.sm, backgroundColor: 'rgba(34,197,94,0.15)', borderWidth: 1, borderColor: 'rgba(34,197,94,0.3)', borderRadius: radii.pill, paddingHorizontal: 11, paddingVertical: 4 },
   pillText: { color: '#86EFAC', fontSize: sizes.textXs, fontWeight: '700' },
   stats: { flexDirection: 'row', paddingHorizontal: spacing.lg, marginTop: -spacing.xl + 4 },

@@ -8,7 +8,7 @@ import { SectionHeader } from '../../components/SectionHeader';
 import { useAuth } from '../../context/AuthContext';
 import { projectRepo, progressRepo, achievementRepo } from '../../repos';
 import { buildCard } from '../../data/learnerView';
-import { colors, spacing, sizes, radii, tabBarClearance } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, tabBarClearance, fonts } from '../../theme/tokens';
 
 /** Compute real performance stats from the learner's cards. */
 function perf(cards) {
@@ -108,23 +108,23 @@ export function LearnerProgressScreen() {
 }
 
 const styles = StyleSheet.create({
-  title: { color: colors.white, fontSize: sizes.text2xl, fontWeight: '900' },
+  title: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   sub: { color: colors.textDim, fontSize: sizes.textXs, marginTop: 2 },
   stats: { flexDirection: 'row', paddingHorizontal: spacing.lg, marginTop: spacing.md },
   levelCard: { marginHorizontal: spacing.lg, marginTop: spacing.md, padding: spacing.md, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.lg },
   levelRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: spacing.sm },
   levelIcon: { fontSize: 26 },
   levelEyebrow: { color: colors.cyan, fontSize: 10, fontWeight: '800', letterSpacing: 1 },
-  levelRank: { color: colors.white, fontSize: sizes.textMd, fontWeight: '900', marginTop: 2 },
+  levelRank: { color: colors.white, fontSize: sizes.textMd, fontFamily: fonts.displayBlack, fontWeight: '900', marginTop: 2 },
   track: { height: 8, borderRadius: 999, backgroundColor: colors.glassStrong, overflow: 'hidden' },
   fill: { height: 8, borderRadius: 999, backgroundColor: colors.cyan },
   levelMeta: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 6 },
   levelMetaText: { color: colors.textMuted, fontSize: sizes.textXs },
-  bold: { color: colors.white, fontWeight: '900' },
+  bold: { color: colors.white, fontFamily: fonts.displayBlack, fontWeight: '900' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: spacing.lg, gap: spacing.sm },
   statBox: { width: '47.8%', backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.lg, padding: spacing.md },
   statIcon: { fontSize: 22, marginBottom: 6 },
-  statValue: { fontSize: sizes.textXl, fontWeight: '900' },
+  statValue: { fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   statLabel: { color: colors.white, fontSize: sizes.textXs, fontWeight: '800', marginTop: 2 },
   statSub: { color: colors.textDim, fontSize: 10, marginTop: 2 },
 });
