@@ -148,7 +148,7 @@ export function LoginScreen({ navigation }) {
               {!configured && (
                 <Text style={styles.note}>
                   Supabase not configured — set EXPO_PUBLIC_SUPABASE_URL in your .env to enable
-                  real sign-in. For Day 1 you can enter via a demo role below.
+                  real sign-in. You can try the app using Guest Access below.
                 </Text>
               )}
 
