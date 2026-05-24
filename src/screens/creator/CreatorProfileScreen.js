@@ -9,7 +9,7 @@ import { SettingsRow } from '../../components/SettingsRow';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
 import { buildAnalytics } from '../../data/creatorStats';
-import { colors, spacing, sizes, radii, avatarColor, initials } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, avatarColor, initials, tabBarClearance } from '../../theme/tokens';
 
 export function CreatorProfileScreen({ navigation }) {
   const { user, signOut } = useAuth();
@@ -27,7 +27,7 @@ export function CreatorProfileScreen({ navigation }) {
 
   return (
     <ScreenBackground>
-      <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: tabBarClearance }}>
         <AppHeader paddingBottom={spacing.xl}>
           <View style={styles.headerRow}>
             <Text style={styles.title}>Profile</Text>

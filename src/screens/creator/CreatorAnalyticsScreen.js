@@ -9,7 +9,7 @@ import { AnalyticsBars } from '../../components/AnalyticsBars';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
 import { buildAnalytics } from '../../data/creatorStats';
-import { colors, spacing, sizes } from '../../theme/tokens';
+import { colors, spacing, sizes, tabBarClearance } from '../../theme/tokens';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Today'];
 
@@ -39,7 +39,7 @@ export function CreatorAnalyticsScreen() {
       {loading ? (
         <ActivityIndicator color={colors.cyan} style={{ marginTop: spacing.xl }} />
       ) : (
-        <ScrollView contentContainerStyle={{ paddingTop: spacing.md, paddingBottom: spacing.xxl }}>
+        <ScrollView contentContainerStyle={{ paddingTop: spacing.md, paddingBottom: tabBarClearance }}>
           <View style={styles.stats}>
             <StatCard value={a.totalStudents} label="Students" tone="teal" />
             <View style={{ width: spacing.sm }} />

@@ -7,7 +7,7 @@ import { ProjectListCard } from '../../components/ProjectListCard';
 import { useAuth } from '../../context/AuthContext';
 import { projectRepo, progressRepo } from '../../repos';
 import { buildCard } from '../../data/learnerView';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, tabBarClearance } from '../../theme/tokens';
 
 const CATS = ['All', 'Electronics', 'Agriculture', 'Coding', 'Renewable', 'Biology', 'Physics'];
 const SORTS = [['newest', '🆕 Newest'], ['popular', '🔥 Popular'], ['rating', '⭐ Top Rated']];
@@ -85,7 +85,7 @@ export function LearnerExploreScreen({ navigation }) {
       {loading ? (
         <ActivityIndicator color={colors.cyan} style={{ marginTop: spacing.xl }} />
       ) : (
-        <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl, paddingTop: spacing.sm }} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={{ paddingBottom: tabBarClearance, paddingTop: spacing.sm }} showsVerticalScrollIndicator={false}>
           {shown.map((c) => (
             <ProjectListCard key={c.id} card={c} onPress={() => navigation.navigate('ProjectDetail', { projectId: c.id })} />
           ))}

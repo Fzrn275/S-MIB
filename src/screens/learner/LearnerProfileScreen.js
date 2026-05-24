@@ -10,7 +10,7 @@ import { SettingsRow } from '../../components/SettingsRow';
 import { useAuth } from '../../context/AuthContext';
 import { projectRepo, progressRepo, achievementRepo } from '../../repos';
 import { buildCard } from '../../data/learnerView';
-import { colors, gradients, spacing, sizes, radii, initials } from '../../theme/tokens';
+import { colors, gradients, spacing, sizes, radii, initials, tabBarClearance } from '../../theme/tokens';
 
 export function LearnerProfileScreen({ navigation }) {
   const { user, signOut } = useAuth();
@@ -45,7 +45,7 @@ export function LearnerProfileScreen({ navigation }) {
 
   return (
     <ScreenBackground>
-      <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl }} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={{ paddingBottom: tabBarClearance }} showsVerticalScrollIndicator={false}>
         <AppHeader paddingBottom={spacing.xl}>
           <View style={styles.headerRow}>
             <Text style={styles.eyebrow}>PROFILE</Text>

@@ -5,7 +5,7 @@ import { AppHeader } from '../../components/AppHeader';
 import { ActivityRow } from '../../components/ActivityRow';
 import { SEED_PARENT_ACTIVITY } from '../../data/seedData';
 import { childTabs, filterAndGroup } from '../../data/parentActivity';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, tabBarClearance } from '../../theme/tokens';
 
 export function ParentActivityScreen() {
   const [filter, setFilter] = useState('All');
@@ -32,7 +32,7 @@ export function ParentActivityScreen() {
         ))}
       </View>
 
-      <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl, paddingTop: spacing.sm }} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={{ paddingBottom: tabBarClearance, paddingTop: spacing.sm }} showsVerticalScrollIndicator={false}>
         {groups.map((g) => (
           <View key={g.group}>
             <Text style={styles.dateLabel}>{g.group}</Text>

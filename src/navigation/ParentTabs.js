@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ParentDashboardScreen } from '../screens/parent/ParentDashboardScreen';
 import { ParentActivityScreen } from '../screens/parent/ParentActivityScreen';
 import { ParentProfileScreen } from '../screens/parent/ParentProfileScreen';
-import { colors } from '../theme/tokens';
+import { FloatingTabBar } from '../components/FloatingTabBar';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,17 +20,10 @@ const iconFor = (name) => ({ color, size }) => {
 export function ParentTabs() {
   return (
     <Tab.Navigator
+      tabBar={(props) => <FloatingTabBar {...props} />}
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarStyle: {
-          backgroundColor: colors.navy,
-          borderTopColor: colors.border,
-          height: 64,
-          paddingBottom: 8,
-          paddingTop: 6,
-        },
-        tabBarActiveTintColor: colors.cyan,
-        tabBarInactiveTintColor: colors.textMuted,
+        tabBarStyle: { position: 'absolute', backgroundColor: 'transparent', borderTopWidth: 0, elevation: 0 },
         tabBarIcon: iconFor(route.name),
       })}
     >

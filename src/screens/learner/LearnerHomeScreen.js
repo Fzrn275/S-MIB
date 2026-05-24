@@ -10,7 +10,7 @@ import { PreviewCard } from '../../components/PreviewCard';
 import { useAuth } from '../../context/AuthContext';
 import { projectRepo, progressRepo, achievementRepo } from '../../repos';
 import { buildCard } from '../../data/learnerView';
-import { colors, spacing, sizes } from '../../theme/tokens';
+import { colors, spacing, sizes, tabBarClearance } from '../../theme/tokens';
 
 export function LearnerHomeScreen({ navigation }) {
   const { user } = useAuth();
@@ -88,7 +88,7 @@ export function LearnerHomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  scroll: { paddingBottom: spacing.lg },
+  scroll: { paddingBottom: tabBarClearance },
   stats: { flexDirection: 'row', paddingHorizontal: spacing.lg, marginTop: -spacing.xl + 4 },
   rail: { paddingHorizontal: spacing.lg, paddingVertical: spacing.sm },
 });

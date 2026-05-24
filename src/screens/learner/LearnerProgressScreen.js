@@ -8,7 +8,7 @@ import { SectionHeader } from '../../components/SectionHeader';
 import { useAuth } from '../../context/AuthContext';
 import { projectRepo, progressRepo, achievementRepo } from '../../repos';
 import { buildCard } from '../../data/learnerView';
-import { colors, spacing, sizes, radii } from '../../theme/tokens';
+import { colors, spacing, sizes, radii, tabBarClearance } from '../../theme/tokens';
 
 /** Compute real performance stats from the learner's cards. */
 function perf(cards) {
@@ -63,7 +63,7 @@ export function LearnerProgressScreen() {
         <Text style={styles.sub}>Level up by completing projects</Text>
       </AppHeader>
 
-      <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl }} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={{ paddingBottom: tabBarClearance }} showsVerticalScrollIndicator={false}>
         <View style={styles.stats}>
           <StatCard value={active} label="Active" tone="teal" />
           <View style={{ width: spacing.sm }} />

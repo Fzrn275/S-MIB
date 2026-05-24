@@ -5,7 +5,7 @@ import { LearnerHomeScreen } from '../screens/learner/LearnerHomeScreen';
 import { LearnerExploreScreen } from '../screens/learner/LearnerExploreScreen';
 import { LearnerProgressScreen } from '../screens/learner/LearnerProgressScreen';
 import { LearnerProfileScreen } from '../screens/learner/LearnerProfileScreen';
-import { colors } from '../theme/tokens';
+import { FloatingTabBar } from '../components/FloatingTabBar';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,17 +22,10 @@ const iconFor = (name) => ({ color, size }) => {
 export function LearnerTabs() {
   return (
     <Tab.Navigator
+      tabBar={(props) => <FloatingTabBar {...props} />}
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarStyle: {
-          backgroundColor: colors.navy,
-          borderTopColor: colors.border,
-          height: 64,
-          paddingBottom: 8,
-          paddingTop: 6,
-        },
-        tabBarActiveTintColor: colors.cyan,
-        tabBarInactiveTintColor: colors.textMuted,
+        tabBarStyle: { position: 'absolute', backgroundColor: 'transparent', borderTopWidth: 0, elevation: 0 },
         tabBarIcon: iconFor(route.name),
       })}
     >

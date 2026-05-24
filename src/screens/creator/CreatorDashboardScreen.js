@@ -10,7 +10,7 @@ import { CreatorProjectCard } from '../../components/CreatorProjectCard';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
 import { buildAnalytics } from '../../data/creatorStats';
-import { colors, spacing, sizes } from '../../theme/tokens';
+import { colors, spacing, sizes, tabBarClearance } from '../../theme/tokens';
 
 export function CreatorDashboardScreen({ navigation }) {
   const { user } = useAuth();
@@ -32,7 +32,7 @@ export function CreatorDashboardScreen({ navigation }) {
 
   return (
     <ScreenBackground>
-      <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl }} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={{ paddingBottom: tabBarClearance }} showsVerticalScrollIndicator={false}>
         <AppHeader paddingBottom={spacing.xl}>
           <Text style={styles.eyebrow}>S-MIB CREATOR</Text>
           <Text style={styles.name}>{user ? user.fullName : ''}</Text>

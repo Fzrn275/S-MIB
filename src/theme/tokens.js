@@ -77,15 +77,24 @@ export const spacing = {
   xxl: 32,
 };
 
+/**
+ * Bottom padding applied to scroll content on tabbed screens so the last
+ * items clear the floating pill nav (FloatingTabBar) which overlays the bottom.
+ */
+export const tabBarClearance = 96;
+
 export const fonts = {
+  // Inter — body text. Loaded in App.js via useFonts(); keys match the
+  // @expo-google-fonts export names, which become the fontFamily strings.
   body: 'Inter_400Regular',
   bodyMedium: 'Inter_500Medium',
   bodySemi: 'Inter_600SemiBold',
   bodyBold: 'Inter_700Bold',
+  // Nunito — headings, titles, buttons, big numbers.
   display: 'Nunito_700Bold',
+  displaySemi: 'Nunito_600SemiBold',
+  displayExtraBold: 'Nunito_800ExtraBold',
   displayBlack: 'Nunito_900Black',
-  // Fallbacks — we don't actually load the @expo-google-fonts packages here;
-  // when fonts haven't loaded yet, RN falls back to the system font.
 };
 
 export const sizes = {

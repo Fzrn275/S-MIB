@@ -7,7 +7,7 @@ import { AppHeader } from '../../components/AppHeader';
 import { CreatorProjectCard } from '../../components/CreatorProjectCard';
 import { useAuth } from '../../context/AuthContext';
 import { creatorRepo } from '../../repos';
-import { colors, spacing, sizes } from '../../theme/tokens';
+import { colors, spacing, sizes, tabBarClearance } from '../../theme/tokens';
 
 const TABS = [
   { label: 'All', match: () => true },
@@ -53,7 +53,7 @@ export function CreatorProjectsScreen({ navigation }) {
       {loading ? (
         <ActivityIndicator color={colors.cyan} style={{ marginTop: spacing.xl }} />
       ) : (
-        <ScrollView contentContainerStyle={{ paddingTop: spacing.sm, paddingBottom: spacing.xxl }}>
+        <ScrollView contentContainerStyle={{ paddingTop: spacing.sm, paddingBottom: tabBarClearance }}>
           {shown.length === 0 ? (
             <Text style={styles.empty}>No projects here yet.</Text>
           ) : (

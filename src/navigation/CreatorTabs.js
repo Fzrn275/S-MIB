@@ -5,7 +5,7 @@ import { CreatorDashboardScreen } from '../screens/creator/CreatorDashboardScree
 import { CreatorProjectsScreen } from '../screens/creator/CreatorProjectsScreen';
 import { CreatorAnalyticsScreen } from '../screens/creator/CreatorAnalyticsScreen';
 import { CreatorProfileScreen } from '../screens/creator/CreatorProfileScreen';
-import { colors } from '../theme/tokens';
+import { FloatingTabBar } from '../components/FloatingTabBar';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,17 +22,10 @@ const iconFor = (name) => ({ color, size }) => {
 export function CreatorTabs() {
   return (
     <Tab.Navigator
+      tabBar={(props) => <FloatingTabBar {...props} />}
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarStyle: {
-          backgroundColor: colors.navy,
-          borderTopColor: colors.border,
-          height: 64,
-          paddingBottom: 8,
-          paddingTop: 6,
-        },
-        tabBarActiveTintColor: colors.cyan,
-        tabBarInactiveTintColor: colors.textMuted,
+        tabBarStyle: { position: 'absolute', backgroundColor: 'transparent', borderTopWidth: 0, elevation: 0 },
         tabBarIcon: iconFor(route.name),
       })}
     >

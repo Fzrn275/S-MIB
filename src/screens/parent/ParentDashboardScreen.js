@@ -11,7 +11,7 @@ import { ChildCard } from '../../components/ChildCard';
 import { useAuth } from '../../context/AuthContext';
 import { parentRepo } from '../../repos';
 import { aggregate } from '../../data/parentStats';
-import { colors, gradients, spacing, sizes, radii, initials } from '../../theme/tokens';
+import { colors, gradients, spacing, sizes, radii, initials, tabBarClearance } from '../../theme/tokens';
 
 export function ParentDashboardScreen({ navigation }) {
   const { user } = useAuth();
@@ -31,7 +31,7 @@ export function ParentDashboardScreen({ navigation }) {
 
   return (
     <ScreenBackground>
-      <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl }} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={{ paddingBottom: tabBarClearance }} showsVerticalScrollIndicator={false}>
         <AppHeader paddingBottom={spacing.xl}>
           <View style={styles.topRow}>
             <Text style={styles.logo}>🦅 S-<Text style={{ color: colors.cyan }}>MIB</Text></Text>
