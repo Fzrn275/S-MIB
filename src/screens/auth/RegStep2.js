@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
-import { TextInput, Button, HelperText, Menu } from 'react-native-paper';
+import { TextInput, HelperText, Menu } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { AuthHeader } from '../../components/AuthHeader';
 import { AppButton } from '../../components/AppButton';
@@ -191,9 +191,7 @@ export function RegStep2({ navigation, route }) {
             variant="primary"
             style={{ marginTop: spacing.lg }}
           />
-          <Button mode="text" onPress={() => navigation.goBack()} textColor={colors.textMuted}>
-            ← Back
-          </Button>
+          <AppButton title="← Back" variant="ghost" onPress={() => navigation.goBack()} style={{ marginTop: spacing.sm }} />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenBackground>

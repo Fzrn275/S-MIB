@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Button } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { AppButton } from '../../components/AppButton';
 import { AppHeader } from '../../components/AppHeader';
 import { StatCard } from '../../components/StatCard';
 import { SectionHeader } from '../../components/SectionHeader';
@@ -48,9 +48,7 @@ export function CreatorDashboardScreen({ navigation }) {
         </View>
 
         <View style={styles.cta}>
-          <Button mode="contained" buttonColor={colors.teal} textColor={colors.white} onPress={() => navigation.navigate('CreatorNewProject')}>
-            + New Project
-          </Button>
+          <AppButton title="+ New Project" variant="primary" onPress={() => navigation.navigate('CreatorNewProject')} />
         </View>
 
         <SectionHeader title="Recent Projects" icon="🛠️" link="See all" onLink={() => navigation.navigate('Projects')} />

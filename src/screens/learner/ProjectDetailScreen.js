@@ -79,7 +79,11 @@ export function ProjectDetailScreen({ navigation, route }) {
               <Text style={styles.progText}>{doneCount} of {totalSteps} steps done</Text>
               <Text style={styles.progPct}>{pct}%</Text>
             </View>
-            <View style={styles.track}><View style={[styles.fill, { width: `${pct}%` }]} /></View>
+            <View style={styles.track}>
+              <View style={[styles.fillWrap, { width: `${pct}%` }]}>
+                <LinearGradient colors={['#B45309', '#F59E0B', '#FCD34D']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.fill} />
+              </View>
+            </View>
           </View>
         ) : null}
 
@@ -132,7 +136,8 @@ const styles = StyleSheet.create({
   progText: { color: colors.textDim, fontSize: sizes.textXs },
   progPct: { color: colors.cyan, fontSize: sizes.textXs, fontWeight: '700' },
   track: { height: 7, borderRadius: 999, backgroundColor: colors.glassStrong, overflow: 'hidden' },
-  fill: { height: 7, borderRadius: 999, backgroundColor: colors.cyan },
+  fillWrap: { height: 7, borderRadius: 999 },
+  fill: { ...StyleSheet.absoluteFillObject, borderRadius: 999 },
   pills: { flexDirection: 'row', gap: 8, paddingHorizontal: spacing.lg, paddingTop: spacing.md },
   pill: { flex: 1, alignItems: 'center', backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.md, paddingVertical: spacing.sm },
   pillIcon: { fontSize: sizes.textLg, marginBottom: 3 },

@@ -133,15 +133,12 @@ export function LoginScreen({ navigation }) {
                 style={{ marginTop: spacing.md }}
               />
 
-              <Button
-                mode="outlined"
-                icon="google"
+              <AppButton
+                title="Continue with Google (Coming soon)"
+                variant="ghost"
                 disabled
-                style={styles.googleBtn}
-                textColor={colors.textMuted}
-              >
-                Continue with Google (Coming soon)
-              </Button>
+                style={{ marginTop: spacing.sm }}
+              />
 
               {!configured && (
                 <Text style={styles.note}>
@@ -162,20 +159,12 @@ export function LoginScreen({ navigation }) {
             <View style={styles.demoCard}>
               <Text style={styles.demoTitle}>Guest Access</Text>
               <View style={styles.demoRow}>
-                <Button compact mode="outlined" textColor={colors.white} onPress={() => onDemoRole('senior')}>
-                  Senior Learner
-                </Button>
-                <Button compact mode="outlined" textColor={colors.white} onPress={() => onDemoRole('junior')}>
-                  Junior Learner
-                </Button>
+                <AppButton title="Senior Learner" variant="outline" size="sm" onPress={() => onDemoRole('senior')} style={{ flex: 1 }} />
+                <AppButton title="Junior Learner" variant="outline" size="sm" onPress={() => onDemoRole('junior')} style={{ flex: 1 }} />
               </View>
               <View style={styles.demoRow}>
-                <Button compact mode="outlined" textColor={colors.white} onPress={() => onDemoRole('creator')}>
-                  Verified Creator
-                </Button>
-                <Button compact mode="outlined" textColor={colors.white} onPress={() => onDemoRole('parent')}>
-                  Parent
-                </Button>
+                <AppButton title="Verified Creator" variant="outline" size="sm" onPress={() => onDemoRole('creator')} style={{ flex: 1 }} />
+                <AppButton title="Parent" variant="outline" size="sm" onPress={() => onDemoRole('parent')} style={{ flex: 1 }} />
               </View>
             </View>
           </ScrollView>

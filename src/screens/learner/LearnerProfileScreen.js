@@ -1,12 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Portal, Modal, Button } from 'react-native-paper';
+import { Portal, Modal } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { AppHeader } from '../../components/AppHeader';
 import { StatCard } from '../../components/StatCard';
 import { SettingsRow } from '../../components/SettingsRow';
+import { AppButton } from '../../components/AppButton';
 import { useAuth } from '../../context/AuthContext';
 import { projectRepo, progressRepo, achievementRepo } from '../../repos';
 import { buildCard } from '../../data/learnerView';
@@ -78,7 +79,7 @@ export function LearnerProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.cta}>
-          <Button mode="outlined" textColor="#F87171" style={{ borderColor: 'rgba(239,68,68,0.3)' }} onPress={() => setConfirm(true)}>🚪 Sign Out</Button>
+          <AppButton title="🚪 Sign Out" variant="ghost" onPress={() => setConfirm(true)} />
         </View>
       </ScrollView>
 
@@ -89,9 +90,9 @@ export function LearnerProfileScreen({ navigation }) {
           <Text style={styles.modalTitle}>Sign Out?</Text>
           <Text style={styles.modalBody}>You will be returned to the login screen. Your progress is saved.</Text>
           <View style={styles.modalBtns}>
-            <Button mode="outlined" textColor={colors.white} style={{ flex: 1, borderColor: colors.border }} onPress={() => setConfirm(false)}>Cancel</Button>
+            <AppButton title="Cancel" variant="ghost" size="md" onPress={() => setConfirm(false)} style={{ flex: 1 }} />
             <View style={{ width: spacing.sm }} />
-            <Button mode="contained" buttonColor={colors.red} textColor={colors.white} style={{ flex: 1 }} onPress={() => { setConfirm(false); signOut(); }}>Sign Out</Button>
+            <AppButton title="Sign Out" variant="danger" size="md" onPress={() => { setConfirm(false); signOut(); }} style={{ flex: 1 }} />
           </View>
         </Modal>
       </Portal>

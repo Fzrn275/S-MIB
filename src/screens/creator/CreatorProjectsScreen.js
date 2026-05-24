@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Button } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { AppButton } from '../../components/AppButton';
 import { AppHeader } from '../../components/AppHeader';
 import { CreatorProjectCard } from '../../components/CreatorProjectCard';
 import { useAuth } from '../../context/AuthContext';
@@ -38,7 +38,7 @@ export function CreatorProjectsScreen({ navigation }) {
       <AppHeader paddingBottom={spacing.md}>
         <View style={styles.titleRow}>
           <Text style={styles.title}>My Projects</Text>
-          <Button mode="contained" compact buttonColor={colors.teal} textColor={colors.white} onPress={() => navigation.navigate('CreatorNewProject')}>+ New</Button>
+          <AppButton title="+ New" variant="primary" size="sm" onPress={() => navigation.navigate('CreatorNewProject')} />
         </View>
       </AppHeader>
 

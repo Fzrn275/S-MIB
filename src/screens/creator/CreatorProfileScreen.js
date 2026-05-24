@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Button } from 'react-native-paper';
 import { ScreenBackground } from '../../components/ScreenBackground';
+import { AppButton } from '../../components/AppButton';
 import { AppHeader } from '../../components/AppHeader';
 import { StatCard } from '../../components/StatCard';
 import { SettingsRow } from '../../components/SettingsRow';
@@ -60,7 +60,7 @@ export function CreatorProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.cta}>
-          <Button mode="outlined" textColor={colors.white} style={{ borderColor: colors.border }} onPress={signOut}>Sign out</Button>
+          <AppButton title="Sign out" variant="ghost" onPress={signOut} />
         </View>
       </ScrollView>
     </ScreenBackground>
