@@ -10,6 +10,7 @@ import { buildCard } from '../../data/learnerView';
 import { colors, spacing, sizes, radii, tabBarClearance, fonts } from '../../theme/tokens';
 
 const CATS = ['All', 'Electronics', 'Agriculture', 'Coding', 'Renewable', 'Biology', 'Physics'];
+const CAT_EMOJI = { All: '🌐', Electronics: '🔌', Agriculture: '🌱', Coding: '💻', Renewable: '♻️', Biology: '🧬', Physics: '⚡' };
 const SORTS = [['newest', '🆕 Newest'], ['popular', '🔥 Popular'], ['rating', '⭐ Top Rated']];
 
 export function LearnerExploreScreen({ navigation }) {
@@ -65,11 +66,15 @@ export function LearnerExploreScreen({ navigation }) {
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.cats}>
-        {CATS.map((c) => (
-          <Pressable key={c} onPress={() => setFilter(c)} style={[styles.catChip, filter === c && styles.catChipActive]}>
-            <Text style={[styles.catText, filter === c && styles.catTextActive]}>{c}</Text>
-          </Pressable>
-        ))}
+        {CATS.map((c) => {
+          const active = filter === c;
+          return (
+            <Pressable key={c} onPress={() => setFilter(c)} style={[styles.catPill, active && styles.catPillActive]}>
+              <Text style={styles.catEmoji}>{CAT_EMOJI[c] || '📦'}</Text>
+              <Text style={[styles.catText, active && styles.catTextActive]}>{c}</Text>
+            </Pressable>
+          );
+        })}
       </ScrollView>
 
       <View style={styles.toolbar}>
@@ -102,14 +107,15 @@ const styles = StyleSheet.create({
   searchIcon: { fontSize: 15, marginRight: 8 },
   searchInput: { flex: 1, color: colors.white, fontSize: sizes.textSm, paddingVertical: 10 },
   cats: { paddingHorizontal: spacing.lg, gap: 8, paddingTop: spacing.md },
-  catChip: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: radii.pill, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border },
-  catChipActive: { backgroundColor: 'rgba(14,116,144,0.5)', borderColor: colors.cyan },
-  catText: { color: colors.textMuted, fontSize: sizes.textXs, fontWeight: '700' },
+  catPill: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingVertical: 8, paddingHorizontal: 14, borderRadius: radii.pill, backgroundColor: 'rgba(255,255,255,0.05)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' },
+  catPillActive: { backgroundColor: colors.teal, borderColor: 'rgba(103,232,249,0.5)', shadowColor: colors.teal, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.4, shadowRadius: 14, elevation: 4 },
+  catEmoji: { fontSize: 14 },
+  catText: { fontFamily: fonts.displayExtraBold, fontSize: 12, fontWeight: '800', color: 'rgba(255,255,255,0.7)' },
   catTextActive: { color: colors.white },
   toolbar: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: spacing.lg, paddingTop: spacing.md },
-  sortBtn: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: radii.sm, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border },
-  sortBtnActive: { backgroundColor: colors.glassStrong, borderColor: colors.cyan },
-  sortText: { color: colors.textMuted, fontSize: 10, fontWeight: '700' },
-  sortTextActive: { color: colors.white },
+  sortBtn: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: radii.pill, backgroundColor: 'rgba(255,255,255,0.05)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.12)' },
+  sortBtnActive: { backgroundColor: 'rgba(245,158,11,0.18)', borderColor: 'rgba(245,158,11,0.45)', shadowColor: colors.yellow, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 8, elevation: 2 },
+  sortText: { fontFamily: fonts.displayExtraBold, fontSize: 11, fontWeight: '800', color: 'rgba(255,255,255,0.7)' },
+  sortTextActive: { color: colors.yellow },
   count: { color: colors.textDim, fontSize: 10 },
 });

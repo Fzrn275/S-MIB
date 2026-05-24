@@ -69,7 +69,7 @@ export function ParentProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.cta}>
-          <AppButton title="🚪 Sign Out" variant="ghost" onPress={() => setConfirm(true)} />
+          <AppButton title="Sign Out" variant="ghost" onPress={() => setConfirm(true)} />
         </View>
       </ScrollView>
 

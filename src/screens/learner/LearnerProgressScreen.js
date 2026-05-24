@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect } from '@react-navigation/native';
 import { ScreenBackground } from '../../components/ScreenBackground';
 import { AppHeader } from '../../components/AppHeader';
@@ -51,16 +52,24 @@ export function LearnerProgressScreen() {
   const p = perf(cards);
   const stats = [
     { icon: '🎯', label: 'Completion Rate', value: `${p.completionRate}%`, sub: 'of started projects', color: colors.cyan },
-    { icon: '⚡', label: 'XP Earned', value: p.xp, sub: 'across all steps', color: colors.green },
-    { icon: '📚', label: 'Projects Started', value: p.startedCount, sub: 'enrolled so far', color: colors.yellow },
-    { icon: '🏆', label: 'Top Category', value: p.topCat, sub: 'most completed', color: colors.orange },
+    { icon: '⚡', label: 'XP Earned', value: p.xp, sub: 'across all steps', color: colors.yellow },
+    { icon: '📚', label: 'Projects Started', value: p.startedCount, sub: 'enrolled so far', color: colors.green },
+    { icon: '🏆', label: 'Top Category', value: p.topCat, sub: 'most completed', color: colors.yellow },
   ];
 
   return (
     <ScreenBackground>
       <AppHeader paddingBottom={spacing.md}>
-        <Text style={styles.title}>My Progress</Text>
-        <Text style={styles.sub}>Level up by completing projects</Text>
+        <View style={styles.headerRow}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.title}>My Progress</Text>
+            <Text style={styles.sub}>Level up by completing projects</Text>
+          </View>
+          <View style={styles.streakPill}>
+            <Text style={styles.streakFire}>🔥</Text>
+            <Text style={styles.streakText}>{user.streak} days</Text>
+          </View>
+        </View>
       </AppHeader>
 
       <ScrollView contentContainerStyle={{ paddingBottom: tabBarClearance }} showsVerticalScrollIndicator={false}>
@@ -74,13 +83,18 @@ export function LearnerProgressScreen() {
 
         <View style={styles.levelCard}>
           <View style={styles.levelRow}>
-            <Text style={styles.levelIcon}>🏗️</Text>
+            <View style={styles.levelIconCircle}><Text style={styles.levelIcon}>🏗️</Text></View>
             <View style={{ flex: 1 }}>
               <Text style={styles.levelEyebrow}>CURRENT LEVEL</Text>
               <Text style={styles.levelRank}>Level {user.level} · {user.rankTitle}</Text>
             </View>
+            <Text style={styles.levelArrow}>›</Text>
           </View>
-          <View style={styles.track}><View style={[styles.fill, { width: `${user.levelProgressPct}%` }]} /></View>
+          <View style={styles.track}>
+            <View style={[styles.fillWrap, { width: `${user.levelProgressPct}%` }]}>
+              <LinearGradient colors={['#B45309', '#F59E0B', '#FCD34D']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.fill} />
+            </View>
+          </View>
           <View style={styles.levelMeta}>
             <Text style={styles.levelMetaText}><Text style={styles.bold}>{user.xp}</Text> / {user.xpForNextLevel} XP</Text>
             <Text style={[styles.levelMetaText, { color: colors.yellow }]}>{user.xpToNextLevel} XP to Level {user.level + 1}</Text>
@@ -110,21 +124,28 @@ export function LearnerProgressScreen() {
 const styles = StyleSheet.create({
   title: { color: colors.white, fontSize: sizes.text2xl, fontFamily: fonts.displayBlack, fontWeight: '900' },
   sub: { color: colors.textDim, fontSize: sizes.textXs, marginTop: 2 },
+  headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  streakPill: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(245,158,11,0.12)', borderWidth: 1, borderColor: 'rgba(245,158,11,0.25)', borderRadius: 999, paddingVertical: 5, paddingHorizontal: 10 },
+  streakFire: { fontSize: sizes.textXs },
+  streakText: { fontFamily: fonts.displayExtraBold, fontSize: 11, fontWeight: '800', color: colors.yellow },
   stats: { flexDirection: 'row', paddingHorizontal: spacing.lg, marginTop: spacing.md },
-  levelCard: { marginHorizontal: spacing.lg, marginTop: spacing.md, padding: spacing.md, backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.lg },
+  levelCard: { marginVertical: 14, marginHorizontal: 16, padding: 14, backgroundColor: 'rgba(255,255,255,0.06)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)', borderTopColor: 'rgba(255,255,255,0.2)', borderRadius: 18 },
   levelRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: spacing.sm },
-  levelIcon: { fontSize: 26 },
+  levelIconCircle: { width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(255,255,255,0.06)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)', alignItems: 'center', justifyContent: 'center' },
+  levelIcon: { fontSize: 20 },
   levelEyebrow: { color: colors.cyan, fontSize: 10, fontWeight: '800', letterSpacing: 1 },
-  levelRank: { color: colors.white, fontSize: sizes.textMd, fontFamily: fonts.displayBlack, fontWeight: '900', marginTop: 2 },
-  track: { height: 8, borderRadius: 999, backgroundColor: colors.glassStrong, overflow: 'hidden' },
-  fill: { height: 8, borderRadius: 999, backgroundColor: colors.cyan },
-  levelMeta: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 6 },
+  levelRank: { color: colors.white, fontSize: 15, fontFamily: fonts.displayBlack, fontWeight: '900', marginTop: 2 },
+  levelArrow: { color: 'rgba(255,255,255,0.3)', fontSize: 22, fontWeight: '300' },
+  track: { height: 6, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.10)', overflow: 'hidden' },
+  fillWrap: { height: 6, borderRadius: 999 },
+  fill: { ...StyleSheet.absoluteFillObject, borderRadius: 999 },
+  levelMeta: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
   levelMetaText: { color: colors.textMuted, fontSize: sizes.textXs },
   bold: { color: colors.white, fontFamily: fonts.displayBlack, fontWeight: '900' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: spacing.lg, gap: spacing.sm },
   statBox: { width: '47.8%', backgroundColor: colors.glass, borderWidth: 1, borderColor: colors.border, borderRadius: radii.lg, padding: spacing.md },
   statIcon: { fontSize: 22, marginBottom: 6 },
   statValue: { fontSize: sizes.textXl, fontFamily: fonts.displayBlack, fontWeight: '900' },
-  statLabel: { color: colors.white, fontSize: sizes.textXs, fontWeight: '800', marginTop: 2 },
-  statSub: { color: colors.textDim, fontSize: 10, marginTop: 2 },
+  statLabel: { color: 'rgba(255,255,255,0.8)', fontSize: sizes.textXs, fontWeight: '800', marginTop: 2 },
+  statSub: { color: 'rgba(255,255,255,0.35)', fontSize: 10, marginTop: 2 },
 });

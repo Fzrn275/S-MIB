@@ -60,7 +60,7 @@ export function CreatorProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.cta}>
-          <AppButton title="Sign out" variant="ghost" onPress={signOut} />
+          <AppButton title="Sign Out" variant="ghost" onPress={signOut} />
         </View>
       </ScrollView>
     </ScreenBackground>
@@ -79,5 +79,5 @@ const styles = StyleSheet.create({
   meta: { color: colors.textMuted, fontSize: sizes.textSm, marginTop: 6 },
   bio: { color: colors.textMuted, fontSize: sizes.textSm, marginTop: spacing.sm, textAlign: 'center', lineHeight: 19 },
   stats: { flexDirection: 'row', paddingHorizontal: spacing.lg, marginTop: spacing.lg },
-  cta: { paddingHorizontal: spacing.lg, marginTop: spacing.lg },
+  cta: { paddingHorizontal: spacing.lg, marginTop: spacing.md },
 });
