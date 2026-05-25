@@ -133,7 +133,7 @@ export class User {
       case 'content_mentor':
         return new ContentMentor({ ...base, ...creatorFields(row) });
       case 'parent':
-        return new Parent({ ...base, prnId: row.public_id, linkedChildIds: row.linked_child_ids || [], phone: row.phone, icNumber: row.ic_number });
+        return new Parent({ ...base, prnId: row.public_id, linkedChildIds: row.linked_child_ids || [], phone: row.phone, relationship: row.relationship });
       default:
         return new User(base);
     }

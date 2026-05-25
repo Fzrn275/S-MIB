@@ -19,7 +19,7 @@ function fieldsForUser(user) {
         { key: 'display_name', label: 'Full Name', value: user.fullName },
         { key: 'email', label: 'Email', value: user.email, keyboardType: 'email-address' },
         { key: 'phone', label: 'Phone', value: user.phone || '', keyboardType: 'phone-pad' },
-        { key: 'ic_number', label: 'IC Number', value: user.icNumber || '' },
+        { key: 'relationship', label: 'Relationship', value: user.relationship || '' },
       ],
     };
   }

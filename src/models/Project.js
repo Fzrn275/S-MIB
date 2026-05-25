@@ -122,17 +122,18 @@ export class Project {
 
   // ── Behavior ─────────────────────────────────────────────────────────────
   /**
-   * Whether a given user can enroll/start this project. Defaults to
-   * "must be published and learner must not require parental consent for
-   * hard projects". Subclasses can refine.
+   * Whether a given user can enroll/start this project. Defaults to "must be
+   * published and the project's difficulty must be within the learner's access
+   * band" (see the Student subclasses' difficultyAccess()). Subclasses can refine.
    */
   canBeStartedBy(user) {
     if (!user) return false;
     if (!this.isPublished) return false;
     if (!user.isLearner || !user.isLearner()) return false;
-    if (typeof user.requiresParentalConsent === 'function' &&
-        user.requiresParentalConsent() &&
-        this._difficulty === 'Hard') {
+    // Lock projects whose difficulty sits outside the learner's access band —
+    // Lower Secondary (JuniorLearner) can't start Hard projects.
+    if (typeof user.difficultyAccess === 'function' &&
+        !user.difficultyAccess().includes(this._difficulty)) {
       return false;
     }
     return true;

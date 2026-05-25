@@ -28,7 +28,7 @@ const FIELDS = {
     { key: 'displayName', label: 'Full Name', placeholder: 'e.g. Encik Hashim bin Ahmad' },
     { key: 'email', label: 'Email', placeholder: 'parent@example.com', keyboardType: 'email-address' },
     { key: 'phone', label: 'Phone Number', placeholder: '+60 12-345 6789', keyboardType: 'phone-pad' },
-    { key: 'icNumber', label: 'IC Number', placeholder: 'e.g. 850101-13-5678', note: 'Used to verify your identity as a guardian' },
+    { key: 'relationship', label: 'Relationship', select: ['Father', 'Mother', 'Guardian', 'Other'] },
   ],
 };
 

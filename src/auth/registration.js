@@ -13,14 +13,18 @@ const JUNIOR_GRADES = new Set(['Form 1', 'Form 2', 'Form 3']);
 const SENIOR_GRADES = new Set(['Form 4', 'Form 5', 'Form 6']);
 
 /**
- * Decide junior vs senior learner. Form 1-3 (or, when grade is absent, age < 16)
- * is a junior; everything else defaults to senior so the parental-consent gate
- * is never falsely applied.
+ * Decide Junior vs Senior learner. In the Malaysian system, Form 1-3 (ages
+ * 13-15, Lower Secondary / PT3 track) are Junior; Form 4-6 (ages 16-18, Upper
+ * Secondary / SPM/STPM track) are Senior. This split drives content difficulty
+ * and feature gating, not parental consent.
  */
 export function resolveLearnerRole({ grade, age } = {}) {
   if (grade && JUNIOR_GRADES.has(grade)) return 'junior_learner';
   if (grade && SENIOR_GRADES.has(grade)) return 'senior_learner';
   const n = Number(age);
+  // Age fallback when grade is absent: the boundary at 16 is the Lower→Upper
+  // Secondary (Form 3 → Form 4) transition, NOT primary vs secondary. Default
+  // to senior so the narrower Junior difficulty band is never applied by error.
   if (Number.isFinite(n) && n > 0) return n < 16 ? 'junior_learner' : 'senior_learner';
   return 'senior_learner';
 }
@@ -120,7 +124,7 @@ export function buildUserModel({ role, id, publicId, profile = {} }) {
     case 'creator':
       return new Creator({ ...base, crtId: publicId, organization: profile.organization, expertise: profile.expertise, bio: profile.bio || null });
     case 'parent':
-      return new Parent({ ...base, prnId: publicId, phone: profile.phone, icNumber: profile.icNumber });
+      return new Parent({ ...base, prnId: publicId, phone: profile.phone, relationship: profile.relationship });
     default:
       throw new Error(`buildUserModel: unsupported role ${role}`);
   }
@@ -142,6 +146,9 @@ export function buildSignupMetadata(role, profile = {}) {
     expertise: profile.expertise,
     years_experience: profile.yearsExperience,
     phone: profile.phone,
-    ic_number: profile.icNumber,
+    // NOTE: requires a profiles.relationship (text, nullable) column AND the
+    // handle_new_user() trigger to read m->>'relationship'. Those DB/SQL changes
+    // are applied separately; this layer just forwards the value.
+    relationship: profile.relationship,
   };
 }

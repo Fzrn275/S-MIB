@@ -62,7 +62,7 @@ export function runAuthSmokeTest() {
       role: 'junior_learner', id: 'id1', publicId: 'LRN-0001',
       profile: { displayName: 'Nurul', email: 'n@s.my', schoolName: 'SMK BK', grade: 'Form 2' },
     });
-    if (u.roleLabel !== 'Junior Learner') throw new Error(u.roleLabel);
+    if (u.roleLabel !== 'Lower Secondary') throw new Error(u.roleLabel);
     const row = u.toRow();
     if (row.role !== 'junior_learner') throw new Error('row.role');
     if (row.public_id !== 'LRN-0001') throw new Error('row.public_id');
@@ -78,21 +78,21 @@ export function runAuthSmokeTest() {
     if (c.toRow().public_id !== 'CRT-0001') throw new Error('crt id');
     const p = buildUserModel({
       role: 'parent', id: 'id3', publicId: 'PRN-0001',
-      profile: { displayName: 'Encik H', email: 'h@e.my', phone: '+60123', icNumber: '850101-13-5678' },
+      profile: { displayName: 'Encik H', email: 'h@e.my', phone: '+60123', relationship: 'Father' },
     });
-    if (p.toRow().phone !== '+60123' || p.toRow().ic_number !== '850101-13-5678') throw new Error('parent cols');
+    if (p.toRow().phone !== '+60123' || p.toRow().relationship !== 'Father') throw new Error('parent cols');
     if (p.toRow().public_id !== 'PRN-0001') throw new Error('prn id');
   }, r);
 
-  check('User.fromRow restores parent phone + ic + children', () => {
+  check('User.fromRow restores parent phone + relationship + children', () => {
     const row = {
       id: 'p1', email: 'p@a.b', display_name: 'Pat', role: 'parent',
-      public_id: 'PRN-0001', phone: '+60123', ic_number: '850101-13-5678',
+      public_id: 'PRN-0001', phone: '+60123', relationship: 'Father',
       linked_child_ids: ['LRN-0001'],
     };
     const u = User.fromRow(row);
     if (u.phone !== '+60123') throw new Error('phone');
-    if (u.icNumber !== '850101-13-5678') throw new Error('ic');
+    if (u.relationship !== 'Father') throw new Error('relationship');
     if (u.linkedChildIds.length !== 1) throw new Error('children');
   }, r);
 
@@ -105,8 +105,8 @@ export function runAuthSmokeTest() {
     const c = buildSignupMetadata('creator', { organization: 'O', expertise: 'Robotics', yearsExperience: 5 });
     if (c.organization !== 'O' || c.expertise !== 'Robotics') throw new Error('creator keys');
     if (c.years_experience !== 5) throw new Error('years_experience');
-    const p = buildSignupMetadata('parent', { phone: '+60', icNumber: '850101-13-5678' });
-    if (p.phone !== '+60' || p.ic_number !== '850101-13-5678') throw new Error('parent keys');
+    const p = buildSignupMetadata('parent', { phone: '+60', relationship: 'Father' });
+    if (p.phone !== '+60' || p.relationship !== 'Father') throw new Error('parent keys');
   }, r);
 
   check('buildUserModel: user.publicId reflects the registered public id', () => {

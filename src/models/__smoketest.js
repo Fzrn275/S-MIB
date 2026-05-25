@@ -43,15 +43,26 @@ export function runModelSmokeTest() {
     if (!(j instanceof Student)) throw new Error('not Student');
     if (!(j instanceof User)) throw new Error('not User');
     if (j.rolePrefix !== 'LRN') throw new Error(`rolePrefix=${j.rolePrefix}`);
-    if (!j.requiresParentalConsent()) throw new Error('junior should require consent');
+    if (j.roleLabel !== 'Lower Secondary') throw new Error(`roleLabel=${j.roleLabel}`);
   }, r);
 
-  check('SeniorLearner: standard content filter, leaderboard opted in', () => {
+  check('SeniorLearner: Upper Secondary label, level + rank defaults', () => {
     const s = new SeniorLearner({ id: 'u2', email: 'b@c.d', displayName: 'Bob', xp: 250 });
-    if (s.contentFilter() !== 'standard') throw new Error('contentFilter');
-    if (!s.isLeaderboardOptedIn()) throw new Error('opted in');
+    if (s.roleLabel !== 'Upper Secondary') throw new Error(`roleLabel=${s.roleLabel}`);
     if (s.level !== 1) throw new Error(`level=${s.level}`);
     if (s.rankTitle !== 'Newcomer') throw new Error(`rank=${s.rankTitle}`);
+  }, r);
+
+  check('JuniorLearner.difficultyAccess() excludes Hard', () => {
+    const j = new JuniorLearner({ id: 'j1', email: 'j@x.y', displayName: 'Jo', grade: 'Form 2' });
+    const access = j.difficultyAccess();
+    if (access.includes('Hard')) throw new Error('junior should not access Hard');
+    if (!access.includes('Easy') || !access.includes('Medium')) throw new Error('junior easy/medium');
+  }, r);
+
+  check('SeniorLearner.difficultyAccess() includes Hard', () => {
+    const s = new SeniorLearner({ id: 's1', email: 's@x.y', displayName: 'Su', grade: 'Form 5' });
+    if (!s.difficultyAccess().includes('Hard')) throw new Error('senior should access Hard');
   }, r);
 
   check('Student.addXp advances level across threshold', () => {

@@ -37,7 +37,16 @@ export function LearnerHomeScreen({ navigation }) {
 
   const active = cards.filter((c) => c.started && !c.completed);
   const done = cards.filter((c) => c.completed);
-  const explore = cards.filter((c) => !c.started).slice(0, 6);
+  // Prioritize the learner's recommended categories on the "Explore New" rail.
+  const recommended = user && typeof user.recommendedCategories === 'function' ? user.recommendedCategories() : null;
+  const explore = cards
+    .filter((c) => !c.started)
+    .sort((a, b) => {
+      if (!recommended) return 0;
+      const rank = (c) => (recommended.includes(c.project.category) ? 0 : 1);
+      return rank(a) - rank(b);
+    })
+    .slice(0, 6);
   const popular = [...cards].sort((a, b) => b.project.enrolled - a.project.enrolled).slice(0, 5);
 
   const goDetail = (card) => navigation.navigate('ProjectDetail', { projectId: card.id });

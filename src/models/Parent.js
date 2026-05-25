@@ -9,14 +9,14 @@ export class Parent extends User {
     prnId = null,
     linkedChildIds = [],
     phone = null,
-    icNumber = null,
+    relationship = null,
     ...userProps
   } = {}) {
     super({ ...userProps, role: 'parent' });
     this._prnId = prnId;
     this._linkedChildIds = Array.isArray(linkedChildIds) ? [...linkedChildIds] : [];
     this._phone = phone;
-    this._icNumber = icNumber;
+    this._relationship = relationship;
   }
 
   get rolePrefix() { return 'PRN'; }
@@ -24,7 +24,7 @@ export class Parent extends User {
 
   get prnId() { return this._prnId || this.publicId; }
   get phone() { return this._phone; }
-  get icNumber() { return this._icNumber; }
+  get relationship() { return this._relationship; }
 
   /** Defensive copy so callers can't mutate internal state. */
   get linkedChildIds() { return [...this._linkedChildIds]; }
@@ -52,7 +52,10 @@ export class Parent extends User {
       public_id: this._prnId,
       linked_child_ids: this._linkedChildIds,
       phone: this._phone,
-      ic_number: this._icNumber,
+      // Requires a profiles.relationship (text, nullable) column in Supabase.
+      // The legacy ic_number column stays in the live schema but is no longer
+      // read or written by the app.
+      relationship: this._relationship,
     };
   }
 }

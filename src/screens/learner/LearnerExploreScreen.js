@@ -37,15 +37,18 @@ export function LearnerExploreScreen({ navigation }) {
 
   const shown = useMemo(() => {
     const q = search.trim().toLowerCase();
+    // Role-gated difficulty: Lower Secondary learners never see Hard projects.
+    const allowed = user && typeof user.difficultyAccess === 'function' ? user.difficultyAccess() : null;
     return cards
       .filter((c) => {
         const p = c.project;
         const catOk = filter === 'All' || (p.category || '').startsWith(filter);
         const searchOk = !q || p.title.toLowerCase().includes(q) || (p.category || '').toLowerCase().includes(q) || (p.description || '').toLowerCase().includes(q);
-        return catOk && searchOk;
+        const diffOk = !allowed || allowed.includes(p.difficulty);
+        return catOk && searchOk && diffOk;
       })
       .sort((a, b) => (sort === 'popular' ? b.project.enrolled - a.project.enrolled : sort === 'rating' ? b.project.rating - a.project.rating : b.project.id - a.project.id));
-  }, [cards, filter, search, sort]);
+  }, [cards, filter, search, sort, user]);
 
   return (
     <ScreenBackground>
